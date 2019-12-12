@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_name_and_comment.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 00:56:53 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/12 00:57:43 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/12 13:51:35 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		get_name_and_comment(t_all* gen)
 		ft_strdel(&gnl);
 		if (get_next_line(gen->fd_s, &gnl) < 1)
 		{
-			gen->fatal = 1;
 			break;
 		}
 		i = 0;
@@ -41,7 +40,6 @@ int		get_name_and_comment(t_all* gen)
 			if (gen->name)
 			{
 				ft_putendl("secondName");
-				gen->fatal = 1;
 				break;
 			}
 			i += ft_strlen(NAME_CMD_STRING) - 1;
@@ -55,7 +53,6 @@ int		get_name_and_comment(t_all* gen)
 					if (get_next_line(gen->fd_s, &gnl) < 1)
 					{
 						ft_strdel(&gnl);
-						gen->fatal = 1;
 						return (-1);
 					}
 					i = 0;
@@ -68,7 +65,6 @@ int		get_name_and_comment(t_all* gen)
 				else
 				{
 					ft_strdel(&gnl);
-					gen->fatal = 1;
 					return (-1);
 				}
 			}
@@ -81,7 +77,6 @@ int		get_name_and_comment(t_all* gen)
 				{
 					ft_putendl("end File In Search Name");
 					ft_strdel(&gnl);
-					gen->fatal = 1;
 					return (-1);
 				}
 				buf = tmp;
@@ -98,7 +93,6 @@ int		get_name_and_comment(t_all* gen)
 			{
 				ft_putendl("bad Symbol In Search Name");
 				ft_strdel(&tmp);
-				gen->fatal = 1;
 				return (-1);
 			}
 			i = 0;
@@ -116,7 +110,6 @@ int		get_name_and_comment(t_all* gen)
 			//если comment уже есть выход
 			if (gen->comment)
 			{
-				gen->fatal = 1;
 				break;
 			}
 			i += ft_strlen(COMMENT_CMD_STRING) - 1;
@@ -130,7 +123,6 @@ int		get_name_and_comment(t_all* gen)
 					if (get_next_line(gen->fd_s, &gnl) < 1)
 					{
 						ft_strdel(&gnl);
-						gen->fatal = 1;
 						return (-1);
 					}
 					i = 0;
@@ -143,7 +135,6 @@ int		get_name_and_comment(t_all* gen)
 				else
 				{
 					ft_strdel(&gnl);
-					gen->fatal = 1;
 					return (-1);
 				}
 			}
@@ -156,7 +147,6 @@ int		get_name_and_comment(t_all* gen)
 				{
 					ft_putendl("end File In Search Comment");
 					ft_strdel(&gnl);
-					gen->fatal = 1;
 					return (-1);
 				}
 				buf = tmp;
@@ -172,7 +162,6 @@ int		get_name_and_comment(t_all* gen)
 			{
 				ft_putendl("bad Symbol In Search Comment");
 				ft_strdel(&tmp);
-				gen->fatal = 1;
 				return (-1);
 			}
 			i = 0;

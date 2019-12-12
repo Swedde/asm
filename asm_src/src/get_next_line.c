@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 01:43:43 by swedde            #+#    #+#             */
-/*   Updated: 2019/09/24 15:11:49 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/12 15:17:17 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char		*ft_record(char **s)
 		i++;
 	if ((*s)[i])
 	{
-		if (!(line = ft_strsub((char const *)*s, 0, i)))
+		if (!(line = ft_strsub((char const *)*s, 0, i + 1)))
 			return (NULL);
 		if (!(content = ft_strsub((char const *)*s, i + 1,
 		ft_strlen(*s) - i - 1)))

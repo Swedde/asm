@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swedde <swedde@student.42.fr>              +#+  +:+       +#+         #
+#    By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 19:17:02 by swedde            #+#    #+#              #
-#    Updated: 2019/12/12 02:02:35 by swedde           ###   ########.fr        #
+#    Updated: 2019/12/12 17:35:06 by nsheev           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ LIB = libft/libft.a
 
 SRC =	src/main.c					\
 		src/get_next_line.c			\
-		src/get_file_name.c			\
+		src/set_def_gen.c			\
 		src/get_name_and_comment.c	\
-		src/write_int_to_file.c
+		src/write_int_to_file.c		\
+		src/do_exit.c 				\
+		src/reading.c
 
 OBJ = $(SRC:.c=.o)
 

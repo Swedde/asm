@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_def_gen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 14:29:01 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/12 15:34:03 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/14 23:38:48 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,21 @@ static t_all*	creat_t_all(void)
 		ft_putendl("Error: didn't allocated memory");
 		exit(-1);
 	}
+	gen->i				= 0;
+	gen->point.x		= 1;
+	gen->point.y		= 1;
 	gen->fd				= 0;
 	gen->fd_s			= 0;
 	gen->file_name		= NULL;
-	gen->comment		= NULL;
-	gen->name			= NULL;
+	gen->comment		= 0;
+	gen->name			= 0;
 	gen->token			= NULL;
 	gen->file			= NULL;
 	gen->error			= NULL;
 	return (gen);
 }
 
-int				get_file(t_all* gen)
+static	int		get_file(t_all* gen)
 {
 	char*	line;
 	char*	buf;

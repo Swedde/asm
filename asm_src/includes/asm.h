@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/12 17:34:33 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/14 22:17:25 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,67 @@
 #include "get_next_line.h"
 #include "op.h"
 
+#define NAME_TYPE 1
+#define COMMENT_TYPE 2
+#define NL_TYPE 3
+#define LABEL_TYPE 4
+#define DELIM_TYPE 5
+#define OP_TYPE 6
+#define REG_ARG_TYPE 7
+#define DIR_ARG_TYPE 8
+#define DIR_LABL_ARG_TYPE 9
+#define IND_ARG_TYPE 10
+#define IND_LABL_ARG_TYPE 11
+
+
 typedef struct	s_point
 {
 	int		x;
 	int		y;
 }				t_point;
 
-
 typedef struct	s_token
 {
-    char*		type;
-	char*		content;
-	t_point		point;
+    int			    type;
+	char*		    content;
+	t_point		    point;
+    struct s_token* next;
 }				t_token;
 
 typedef union	u_test
 {
-    unsigned a;
+    unsigned		a;
     struct{
-    unsigned char c1:8;
-    unsigned char c2:8;
-    unsigned char c3:8;
-    unsigned char c4:8;
+    unsigned char	c1:8;
+    unsigned char	c2:8;
+    unsigned char	c3:8;
+    unsigned char	c4:8;
     }ch;
 }				uni_t;
 
 typedef struct  s_all
 {
+    int         i;
+    char*		file;
+    t_point     point;
+	t_token*	token;
     int			fd;
     int			fd_s;
-    char*		name;
-    char*		comment;
 	char*		file_name;
 	char*		error;
-	t_token*	token;
-	char*		file;
+    int         name;
+    int         comment;
 }				t_all;
 
 t_all*			set_def_gen(char *s);
-int				get_name_and_comment(t_all* gen);
 int             write_int_to_file(t_all* gen, int to_file);
 void    		do_exit(char**   error_mes, t_all*   gen);
 int	    		reading(t_all*	gen);
 
+
+t_token*	new_token(int type, char* content, t_point point);
+void		push_tail_token(t_token** head, int type, char* con, t_point point);
+void		lst_del_token(t_token* token);
+void		print_token(t_token*	token);
 
 #endif

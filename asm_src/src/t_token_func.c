@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 00:46:14 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/13 19:30:05 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/16 02:23:50 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,24 @@ void		lst_del_token(t_token* token)
 
 void		print_token(t_token*	token)
 {
+
 	while (token)
 	{
-		printf("{ %d }%s", token->type, token->content);
+		int i = token->type;
+		printf(" | %s: %s", i == 1 ? "nam"
+						: i == 2 ? "com"
+						: i == 3 ? "\\n"
+						: i == 4 ? "lab"
+						: i == 5 ? "sep"
+						: i == 6 ? "ins"
+						: i == 7 ? "T_REG"
+						: i == 8 ? "T_DIR"
+						: i == 9 ? "T_DIR_LABEL"
+						: i == 10 ? "T_IND"
+						: i == 11 ? "T_IND_LABEL"
+						: "\\0"
+						, token->content);
 		token = token->next;
 	}
+	printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/14 22:17:25 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/16 02:26:08 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 #include "op.h"
+#include <stdarg.h>
 
 #define NAME_TYPE 1
 #define COMMENT_TYPE 2
@@ -28,6 +29,7 @@
 #define DIR_LABL_ARG_TYPE 9
 #define IND_ARG_TYPE 10
 #define IND_LABL_ARG_TYPE 11
+#define END_FILE 12
 
 
 typedef struct	s_point
@@ -73,11 +75,16 @@ t_all*			set_def_gen(char *s);
 int             write_int_to_file(t_all* gen, int to_file);
 void    		do_exit(char**   error_mes, t_all*   gen);
 int	    		reading(t_all*	gen);
+char*			char_to_string(char c);
 
 
 t_token*	new_token(int type, char* content, t_point point);
 void		push_tail_token(t_token** head, int type, char* con, t_point point);
 void		lst_del_token(t_token* token);
+void		print_point(t_point a);
+void		lexical_analyz(t_all*	gen);
 void		print_token(t_token*	token);
+void		start_analyz(t_all*	gen, t_token* token);
+
 
 #endif

@@ -1,39 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   printf_point.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/19 14:48:51 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/16 01:13:48 by swedde           ###   ########.fr       */
+/*   Created: 2019/12/15 23:10:18 by swedde            #+#    #+#             */
+/*   Updated: 2019/12/15 23:12:51 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "asm.h"
 
-# define BUFF_SIZE 4
-
-# include <stdlib.h>
-
-# include <string.h>
-
-# include <unistd.h>
-
-# include <stdio.h>
-
-# include <fcntl.h>
-
-#include <stdarg.h>
-
-typedef struct		s_g_list
+void	print_point(t_point a)
 {
-	char			*content;
-	int				sfd;
-	struct s_g_list	*next;
-}					t_g_list;
-
-int					get_next_line(const int fd, char **line);
-
-#endif
+	ft_putstr("Ln ");
+	ft_putnbr(a.x);
+	ft_putstr(", Col ");
+	ft_putnbr(a.y);
+}

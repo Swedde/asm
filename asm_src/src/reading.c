@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/15 01:30:17 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/16 02:26:24 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,15 +132,6 @@ int			find_label(t_all* gen)
 	ft_strdel(&tmp);
 	while (j + 1 > gen->i)
 		increment_point(gen);
-}
-
-char*		char_to_string(char c)
-{
-	char*	s;
-
-	s = ft_strnew(1);
-	s[0] = c;
-	return s;
 }
 
 int			is_op(t_all* gen)
@@ -436,6 +427,8 @@ int			reading(t_all*	gen)
 	{
 		while ((gen->file[gen->i] == ' ' || gen->file[gen->i] == '\t') && gen->file[gen->i])
 			increment_point(gen);
+		if (!gen->file[gen->i])
+			break;
 		if (gen->file[gen->i] == COMMENT_CHAR || gen->file[gen->i] == ';')
 			while (gen->file[gen->i] != '\n' && gen->file[gen->i])
 			increment_point(gen);
@@ -468,5 +461,6 @@ int			reading(t_all*	gen)
 			do_exit(NULL, gen);
 		}
 	}
+	push_tail_token(&gen->token, END_FILE, "END FILE", gen->point);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 18:48:57 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/14 22:01:21 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/16 01:50:37 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,17 @@ int     main(int ac, char **av)
 	gen = set_def_gen(av[ac-1]);
 	reading(gen);
 	print_token(gen->token);
+	lexical_analyz(gen);
+	/*
 	if ((gen->fd = open(gen->file_name, O_RDWR|O_CREAT|O_TRUNC, 0777)) == -1)
 	{
 		write(1, "errorInOpenFd\n", 12);
 		exit(-1);
 	}
-	/*
 	write_int_to_file(gen, COREWAR_EXEC_MAGIC);
 	write_name_and_comment_to_file(gen);
-    close(gen->fd);*/
+    close(gen->fd);
+	*/
 	do_exit(NULL, gen);
     return (0);
 }

@@ -6,7 +6,7 @@
 #    By: swedde <swedde@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 19:17:02 by swedde            #+#    #+#              #
-#    Updated: 2019/12/13 01:21:39 by swedde           ###   ########.fr        #
+#    Updated: 2019/12/15 23:16:19 by swedde           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ SRC =	src/main.c					\
 		src/write_int_to_file.c		\
 		src/do_exit.c 				\
 		src/reading.c				\
-		src/t_token_func.c
+		src/t_token_func.c 			\
+		src/char_to_string.c 		\
+		src/print_point.c 			\
+		src/lexical_analyz.c
 
 OBJ = $(SRC:.c=.o)
 

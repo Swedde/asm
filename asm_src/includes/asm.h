@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/16 02:26:08 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/17 19:03:46 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ typedef struct	s_token
     int			    type;
 	char*		    content;
 	t_point		    point;
+	int				size;
+	unsigned char	op_code;
+	unsigned char	arg_code;
+	int				dir_size;
     struct s_token* next;
 }				t_token;
 
@@ -69,6 +73,7 @@ typedef struct  s_all
 	char*		error;
     int         name;
     int         comment;
+	int			size;
 }				t_all;
 
 t_all*			set_def_gen(char *s);
@@ -85,6 +90,10 @@ void		print_point(t_point a);
 void		lexical_analyz(t_all*	gen);
 void		print_token(t_token*	token);
 void		start_analyz(t_all*	gen, t_token* token);
+void		recording(t_all* gen);
+void		set_size_code(t_all* gen, t_token* token);
+//
+t_token*	next_token(t_token* token, int i);
 
 
 #endif

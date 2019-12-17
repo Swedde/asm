@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 14:29:01 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/14 23:38:48 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/17 21:38:54 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static t_all*	creat_t_all(void)
 	gen->name			= 0;
 	gen->token			= NULL;
 	gen->file			= NULL;
+	gen->size			= 0;
 	gen->error			= NULL;
 	return (gen);
 }
@@ -83,8 +84,9 @@ t_all*			set_def_gen(char *s)
 	get_file_name(gen, s);
 	if (((gen->fd_s = open(s, O_RDONLY)) == -1) || (read(gen->fd_s, tmp, 0) < 0))
 	{
-		tmp = ft_strjoin("Can't read source file ", s);
-		do_exit(&tmp, gen);
+		ft_putstr("Error: Failed to read file ");
+		ft_putendl(s);
+		do_exit(NULL, gen);
 	}
 	get_file(gen);
 	close(gen->fd_s);

@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/16 02:26:24 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/16 23:57:34 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int			is_op(t_all* gen)
 	s = &gen->file[gen->i];
 	if ((!ft_strcmp(s, ft_strstr(s, "live")) && is_delim(s[4]) && s[4] != LABEL_CHAR) ||
 	(!ft_strcmp(s, ft_strstr(s, "ld")) && is_delim(s[2]) && s[2] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "sr")) && is_delim(s[2]) && s[2] != LABEL_CHAR) ||
+	(!ft_strcmp(s, ft_strstr(s, "st")) && is_delim(s[2]) && s[2] != LABEL_CHAR) ||
 	(!ft_strcmp(s, ft_strstr(s, "add")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
 	(!ft_strcmp(s, ft_strstr(s, "sub")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
 	(!ft_strcmp(s, ft_strstr(s, "and")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
@@ -163,35 +163,35 @@ char*		get_op(char* s)
 {
 	if (!ft_strcmp(s, ft_strstr(s, "live")))
 		return (ft_strdup("live"));
-	if (!ft_strcmp(s, ft_strstr(s, "ld")))
-		return (ft_strdup("ld"));
-	if (!ft_strcmp(s, ft_strstr(s, "sr")))
-		return (ft_strdup("sr"));
-	if (!ft_strcmp(s, ft_strstr(s, "add")))
-		return (ft_strdup("add"));
-	if (!ft_strcmp(s, ft_strstr(s, "sub")))
-		return (ft_strdup("sub"));
-	if (!ft_strcmp(s, ft_strstr(s, "and")))
-		return (ft_strdup("and"));
-	if (!ft_strcmp(s, ft_strstr(s, "or")))
-		return (ft_strdup("or"));
-	if (!ft_strcmp(s, ft_strstr(s, "xor")))
-		return (ft_strdup("xor"));
-	if (!ft_strcmp(s, ft_strstr(s, "zjmp")))
-		return (ft_strdup("zjmp"));
-	if (!ft_strcmp(s, ft_strstr(s, "ldi")))
+	else if (!ft_strcmp(s, ft_strstr(s, "ldi")))
 		return (ft_strdup("ldi"));
-	if (!ft_strcmp(s, ft_strstr(s, "sti")))
+	else if (!ft_strcmp(s, ft_strstr(s, "ld")))
+		return (ft_strdup("ld"));
+	else if (!ft_strcmp(s, ft_strstr(s, "sti")))
 		return (ft_strdup("sti"));
-	if (!ft_strcmp(s, ft_strstr(s, "fork")))
+	else if (!ft_strcmp(s, ft_strstr(s, "st")))
+		return (ft_strdup("st"));
+	else if (!ft_strcmp(s, ft_strstr(s, "add")))
+		return (ft_strdup("add"));
+	else if (!ft_strcmp(s, ft_strstr(s, "sub")))
+		return (ft_strdup("sub"));
+	else if (!ft_strcmp(s, ft_strstr(s, "and")))
+		return (ft_strdup("and"));
+	else if (!ft_strcmp(s, ft_strstr(s, "or")))
+		return (ft_strdup("or"));
+	else if (!ft_strcmp(s, ft_strstr(s, "xor")))
+		return (ft_strdup("xor"));
+	else if (!ft_strcmp(s, ft_strstr(s, "zjmp")))
+		return (ft_strdup("zjmp"));
+	else if (!ft_strcmp(s, ft_strstr(s, "fork")))
 		return (ft_strdup("fork"));
-	if (!ft_strcmp(s, ft_strstr(s, "lld")))
-		return (ft_strdup("lld"));
-	if (!ft_strcmp(s, ft_strstr(s, "lldi")))
+	else if (!ft_strcmp(s, ft_strstr(s, "lldi")))
 		return (ft_strdup("lldi"));
-	if (!ft_strcmp(s, ft_strstr(s, "lfork")))
+	else if (!ft_strcmp(s, ft_strstr(s, "lld")))
+		return (ft_strdup("lld"));
+	else if (!ft_strcmp(s, ft_strstr(s, "lfork")))
 		return (ft_strdup("lfork"));
-	if (!ft_strcmp(s, ft_strstr(s, "aff")))
+	else if (!ft_strcmp(s, ft_strstr(s, "aff")))
 		return (ft_strdup("aff"));
 	return (NULL);
 }
@@ -231,7 +231,7 @@ int			is_reg_arg(char* s)
 	int		i;
 	int		j;
 
-	if ((s[0] != 'r') || (s[1] == '+' || s[i] == '-' || !(s[1] <= '9' && s[1] >= '0')))
+	if ((s[0] != 'r') || (s[1] == '+' || s[1] == '-' || !(s[1] <= '9' && s[1] >= '0')))
 		return (0);
 	i = 1;
 	while (s[i] == '0')
@@ -431,7 +431,7 @@ int			reading(t_all*	gen)
 			break;
 		if (gen->file[gen->i] == COMMENT_CHAR || gen->file[gen->i] == ';')
 			while (gen->file[gen->i] != '\n' && gen->file[gen->i])
-			increment_point(gen);
+				increment_point(gen);
 		//search name
 		else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i], NAME_CMD_STRING)))
 			find_name_comment(gen, NAME_TYPE, NAME_CMD_STRING);

@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/17 19:03:46 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/18 02:07:21 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ typedef union	u_test
     }ch;
 }				uni_t;
 
+typedef union	s_short
+{
+    unsigned short	a;
+    struct{
+    unsigned char	c1:8;
+    unsigned char	c2:8;
+    }ch;
+}				t_short;
+
 typedef struct  s_all
 {
     int         i;
@@ -74,6 +83,7 @@ typedef struct  s_all
     int         name;
     int         comment;
 	int			size;
+	int			op_size;
 }				t_all;
 
 t_all*			set_def_gen(char *s);
@@ -92,6 +102,7 @@ void		print_token(t_token*	token);
 void		start_analyz(t_all*	gen, t_token* token);
 void		recording(t_all* gen);
 void		set_size_code(t_all* gen, t_token* token);
+int         write_short_to_file(t_all* gen, short to_file);
 //
 t_token*	next_token(t_token* token, int i);
 

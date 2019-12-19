@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/16 23:57:34 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/19 15:33:31 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int			find_label(t_all* gen)
 	ft_strdel(&tmp);
 	while (j + 1 > gen->i)
 		increment_point(gen);
+	return (1);
 }
 
 int			is_op(t_all* gen)

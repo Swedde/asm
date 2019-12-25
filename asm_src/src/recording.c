@@ -6,61 +6,36 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 00:11:50 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/25 16:08:52 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/25 18:33:10 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		write_byte_to_file(t_all *gen, unsigned char c)
+int		set_arg_and_size(t_all *gen, t_token *tmp, int move, int dir_size)
 {
-	if (write(gen->fd, &c, 1) == -1)
-	{
-		ft_putendl("Error: Failed to write to file");
-		do_exit(NULL, gen);
-	}
-	return (1);
-}
+	int		arg;
 
-int		write_string_to_file(int fd, char *s, int len)
-{
-	int				i;
-	unsigned char	c;
-
-	i = 0;
-	while (s[i])
+	arg = 0;
+	if (tmp->type == REG_ARG_TYPE)
 	{
-		c = s[i];
-		write(fd, &c, 1);
-		i++;
+		arg = 1;
+		gen->size++;
 	}
-	c = 0;
-	while (i < len)
+	else if (tmp->type == DIR_ARG_TYPE || tmp->type == DIR_LABL_ARG_TYPE)
 	{
-		write(fd, &c, 1);
-		i++;
+		tmp->size = gen->op_size;
+		tmp->dir_size = dir_size;
+		gen->size += dir_size;
+		arg = 2;
 	}
-	return (0);
-}
-
-int		write_nam_com_to_file(t_all *gen, int len, int type)
-{
-	t_token*	token;
-
-	token = gen->token;
-	while (token->type != type)
-		token = token->next;
-	if (ft_strlen(token->content) > len)
+	else
 	{
-		print_point(token->point);
-		ft_putstr(": Constant error:\n\t");
-		print_token(token);
-		ft_putendl(" size exceeded");
-		do_exit(NULL, gen);
+		tmp->size = gen->op_size;
+		gen->size += 2;
+		arg = 3;
 	}
-	write_string_to_file(gen->fd, token->content, len);
-	write_int_to_file(gen, 0);
-	return (1);
+	return (arg << move);
 }
 
 int		op_dir(t_all *gen, t_token *token, char op_c, int dir_size)
@@ -74,100 +49,46 @@ int		op_dir(t_all *gen, t_token *token, char op_c, int dir_size)
 	return (0);
 }
 
-void	op_dirind_reg(t_all *gen, t_token *token, char op_c, int dir_size)
+int		op_dirind_reg(t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
-	t_token*		tmp;
 
 	gen->size++;
 	token->op_code = op_c;
-	if ((tmp = next_token(token, 1))->type == DIR_ARG_TYPE || tmp->type == DIR_LABL_ARG_TYPE)
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_1 = 2 << 6;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		gen->size += 2;
-		arg_1 = 3 << 6;
-	}
-	tmp = next_token(token, 3);
-	gen->size++;
-	arg_2 = 1 << 4;
+	arg_1 = set_arg_and_size(gen, next_token(token, 1), 6, dir_size);
+	arg_2 = set_arg_and_size(gen, next_token(token, 3), 4, dir_size);
 	token->arg_code = arg_1 | arg_2;
 	set_size_code(gen, next_token(token, 5));
+	return (0);
 }
 
-void	op_reg_regdirind_regdir(t_all *gen, t_token *token, char op_c, int dir_size)
+int		op_reg_regdirind_regdir(
+	t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
 	unsigned char	arg_3;
-	t_token			*tmp;
 
 	gen->size++;
 	token->op_code = op_c;
-	gen->size++;
-	arg_1 = 1 << 6;
-	if ((tmp = next_token(token, 3))->type == REG_ARG_TYPE)
-	{
-		arg_2 = 1 << 4;
-		gen->size++;
-	}
-	else if (tmp->type == DIR_ARG_TYPE || tmp->type == DIR_LABL_ARG_TYPE)
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_2 = 2 << 4;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		gen->size += 2;
-		arg_2 = 3 << 4;
-	}
-	if ((tmp = next_token(token, 5))->type == REG_ARG_TYPE)
-	{
-		gen->size++;
-		arg_3 = 1 << 2;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_3 = 2 << 2;
-	}
+	arg_1 = set_arg_and_size(gen, next_token(token, 1), 6, dir_size);
+	arg_2 = set_arg_and_size(gen, next_token(token, 3), 4, dir_size);
+	arg_3 = set_arg_and_size(gen, next_token(token, 5), 2, dir_size);
 	token->arg_code = arg_1 | arg_2 | arg_3;
 	set_size_code(gen, next_token(token, 7));
+	return (0);
 }
 
 int		op_reg_regind(t_all *gen, t_token *token, char op_c)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
-	t_token			*tmp;
 
 	gen->size++;
 	token->op_code = op_c;
-	gen->size++;
-	arg_1 = 1 << 6;
-	if ((tmp = next_token(token, 3))->type == REG_ARG_TYPE)
-	{
-		arg_2 = 1 << 4;
-		gen->size++;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		gen->size += 2;
-		arg_2 = 3 << 4;
-	}
+	arg_1 = set_arg_and_size(gen, next_token(token, 1), 6, 0);
+	arg_2 = set_arg_and_size(gen, next_token(token, 3), 4, 0);
 	token->arg_code = arg_1 | arg_2;
 	set_size_code(gen, next_token(token, 5));
 	return (0);
@@ -182,97 +103,36 @@ int		op_reg_reg_reg(t_all *gen, t_token *token, char op_c)
 	return (0);
 }
 
-
-int		op_regdirind_regdirind_reg(t_all *gen, t_token *token, char op_c, int dir_size)
+int		op_regdirind_regdirind_reg(
+	t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
-	t_token			*tmp;
+	unsigned char	arg_3;
 
 	gen->size++;
 	token->op_code = op_c;
-	if ((tmp = next_token(token, 1))->type == REG_ARG_TYPE)
-	{
-		arg_1 = 1 << 6;
-		gen->size++;
-	}
-	else if (tmp->type == DIR_ARG_TYPE || tmp->type == DIR_LABL_ARG_TYPE)
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_1 = 2 << 6;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		gen->size += 2;
-		arg_1 = 3 << 6;
-	}
-	if ((tmp = next_token(token, 3))->type == REG_ARG_TYPE)
-	{
-		arg_2 = 1 << 4;
-		gen->size++;
-	}
-	else if (tmp->type == DIR_ARG_TYPE || tmp->type == DIR_LABL_ARG_TYPE)
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_2 = 2 << 4;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		gen->size += 2;
-		arg_2 = 3 << 4;
-	}
-	gen->size++;
-	token->arg_code = arg_1 | arg_2 | (1 << 2);
+	arg_1 = set_arg_and_size(gen, next_token(token, 1), 6, dir_size);
+	arg_2 = set_arg_and_size(gen, next_token(token, 3), 4, dir_size);
+	arg_3 = set_arg_and_size(gen, next_token(token, 5), 2, dir_size);
+	token->arg_code = arg_1 | arg_2 | arg_3;
 	set_size_code(gen, next_token(token, 7));
 	return (0);
 }
 
-int		op_regdirind_regdir_reg(t_all *gen, t_token *token, char op_c, int dir_size)
+int		op_regdirind_regdir_reg(
+	t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
-	t_token			*tmp;
+	unsigned char	arg_3;
 
 	gen->size++;
 	token->op_code = op_c;
-	if ((tmp = next_token(token, 1))->type == REG_ARG_TYPE)
-	{
-		arg_1 = 1 << 6;
-		gen->size++;
-	}
-	else if (tmp->type == DIR_ARG_TYPE || tmp->type == DIR_LABL_ARG_TYPE)
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_1 = 2 << 6;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		gen->size += 2;
-		arg_1 = 3 << 6;
-	}
-	if ((tmp = next_token(token, 3))->type == REG_ARG_TYPE)
-	{
-		arg_2 = 1 << 4;
-		gen->size++;
-	}
-	else
-	{
-		tmp->size = gen->op_size;
-		tmp->dir_size = dir_size;
-		gen->size += dir_size;
-		arg_2 = 2 << 4;
-	}
-	gen->size++;
-	token->arg_code = arg_1 | arg_2 | (1 << 2);
+	arg_1 = set_arg_and_size(gen, next_token(token, 1), 6, dir_size);
+	arg_2 = set_arg_and_size(gen, next_token(token, 3), 4, dir_size);
+	arg_3 = set_arg_and_size(gen, next_token(token, 5), 2, dir_size);
+	token->arg_code = arg_1 | arg_2 | arg_3;
 	set_size_code(gen, next_token(token, 7));
 	return (0);
 }
@@ -288,38 +148,28 @@ int		op_reg(t_all *gen, t_token *token, char op_c)
 
 void	get_op_code(t_all *gen, t_token *token)
 {
-	if (!ft_strcmp(token->content, "live"))
-		op_dir(gen, token, 1, 4);
-	else if (!ft_strcmp(token->content, "ld"))
-		op_dirind_reg(gen, token, 2, 4);
-	else if (!ft_strcmp(token->content, "st"))
-		op_reg_regind(gen, token, 3);
-	else if (!ft_strcmp(token->content, "add"))
-		op_reg_reg_reg(gen, token, 4);
-	else if (!ft_strcmp(token->content, "sub"))
-		op_reg_reg_reg(gen, token, 5);
-	else if (!ft_strcmp(token->content, "and"))
-		op_regdirind_regdirind_reg(gen, token, 6, 4);
-	else if (!ft_strcmp(token->content, "or"))
-		op_regdirind_regdirind_reg(gen, token, 7, 4);
-	else if (!ft_strcmp(token->content, "xor"))
-		op_regdirind_regdirind_reg(gen, token, 8, 4);
-	else if (!ft_strcmp(token->content, "zjmp"))
-		op_dir(gen, token, 9, 2);
-	else if (!ft_strcmp(token->content, "ldi"))
-		op_regdirind_regdir_reg(gen, token, 10, 2);
-	else if (!ft_strcmp(token->content, "sti"))
-		op_reg_regdirind_regdir(gen, token, 11, 2);
- 	else if (!ft_strcmp(token->content, "fork"))
-		op_dir(gen, token, 12, 2);
-	else if (!ft_strcmp(token->content, "lld"))
-		op_dirind_reg(gen, token, 13, 4);
-	else if (!ft_strcmp(token->content, "lldi"))
-		op_regdirind_regdir_reg(gen, token, 14, 2);
-	else if (!ft_strcmp(token->content, "lfork"))
-		op_dir(gen, token, 15, 2);
-	else if (!ft_strcmp(token->content, "aff"))
-		op_reg(gen, token, 16);
+	!ft_strcmp(token->content, "live") ? op_dir(gen, token, 1, 4) : 0;
+	!ft_strcmp(token->content, "ld") ? op_dirind_reg(gen, token, 2, 4) : 0;
+	!ft_strcmp(token->content, "st") ? op_reg_regind(gen, token, 3) : 0;
+	!ft_strcmp(token->content, "add") ? op_reg_reg_reg(gen, token, 4) : 0;
+	!ft_strcmp(token->content, "sub") ? op_reg_reg_reg(gen, token, 5) : 0;
+	!ft_strcmp(token->content, "and") ?
+		op_regdirind_regdirind_reg(gen, token, 6, 4) : 0;
+	!ft_strcmp(token->content, "or") ?
+		op_regdirind_regdirind_reg(gen, token, 7, 4) : 0;
+	!ft_strcmp(token->content, "xor") ?
+		op_regdirind_regdirind_reg(gen, token, 8, 4) : 0;
+	!ft_strcmp(token->content, "zjmp") ? op_dir(gen, token, 9, 2) : 0;
+	!ft_strcmp(token->content, "ldi") ?
+		op_regdirind_regdir_reg(gen, token, 10, 2) : 0;
+	!ft_strcmp(token->content, "sti") ?
+		op_reg_regdirind_regdir(gen, token, 11, 2) : 0;
+ 	!ft_strcmp(token->content, "fork") ? op_dir(gen, token, 12, 2) : 0;
+	!ft_strcmp(token->content, "lld") ? op_dirind_reg(gen, token, 13, 4) : 0;
+	!ft_strcmp(token->content, "lldi") ?
+		op_regdirind_regdir_reg(gen, token, 14, 2) : 0;
+	!ft_strcmp(token->content, "lfork") ? op_dir(gen, token, 15, 2) : 0;
+	!ft_strcmp(token->content, "aff") ? op_reg(gen, token, 16) : 0;
 }
 
 int		set_op_size(t_all *gen, t_token *token)
@@ -350,7 +200,8 @@ int		get_label_value(t_token *start, t_token *token)
 {
 	while (start)
 	{
-		if (start->type == LABEL_TYPE && !ft_strcmp(start->content, token->content))
+		if (start->type == LABEL_TYPE &&
+		!ft_strcmp(start->content, token->content))
 			return (start->size - token->size);
 		start = start->next;
 	}
@@ -363,10 +214,6 @@ void	write_exec_code_to_file(t_all *gen, t_token *token)
 	{
 		if (token->type == OP_TYPE && write_byte_to_file(gen, token->op_code))
 			token->arg_code ? write_byte_to_file(gen, token->arg_code) : 0;
-	//	{
-	//		if (token->arg_code)
-	//			write_byte_to_file(gen, token->arg_code);
-	//	}
 		else if (token->type == REG_ARG_TYPE)
 			write_byte_to_file(gen, (unsigned char)ft_atoi(token->content));
 		else if (token->type == DIR_ARG_TYPE)
@@ -376,13 +223,14 @@ void	write_exec_code_to_file(t_all *gen, t_token *token)
 				write_int_to_file(gen, ft_atoi(token->content));
 		else if (token->type == DIR_LABL_ARG_TYPE)
 			if (token->dir_size == 2)
-				write_short_to_file(gen, (short)get_label_value(gen->token, token));
+				write_short_to_file(gen,
+				(short)get_label_value(gen->token, token));
 			else
 				write_int_to_file(gen, get_label_value(gen->token, token));
 		else if (token->type == IND_ARG_TYPE)
 			write_short_to_file(gen, (short)ft_atoi(token->content));
 		else if (token->type == IND_LABL_ARG_TYPE)
-			write_short_to_file(gen, (short)get_label_value(gen->token, token));
+			write_short_to_file(gen, get_label_value(gen->token, token));
 		token = token->next;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 22:58:42 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/17 16:01:29 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/25 18:30:55 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void		print_token_type(int i)
+void	print_token_type(int i)
 {
 	if (i == 1)
 		ft_putstr("NAME");
@@ -40,7 +40,7 @@ void		print_token_type(int i)
 		ft_putstr("END FILE");
 }
 
-t_token*	next_token(t_token* token, int i)
+t_token	*next_token(t_token *token, int i)
 {
 	while (i)
 	{
@@ -50,7 +50,7 @@ t_token*	next_token(t_token* token, int i)
 	return (token);
 }
 
-void		print_expexted_exit(t_all* gen, t_token* token, int i, ...)
+void	print_expexted_exit(t_all *gen, t_token *token, int i, ...)
 {
 	va_list	ap;
 	int		a;
@@ -81,7 +81,7 @@ void		print_expexted_exit(t_all* gen, t_token* token, int i, ...)
 	do_exit(NULL, gen);
 }
 
-int			is_equal_token_type(t_token* token, int i, ...)
+int		is_equal_token_type(t_token *token, int i, ...)
 {
 	int		a;
 	va_list	ap;
@@ -103,7 +103,7 @@ int			is_equal_token_type(t_token* token, int i, ...)
 	return (0);
 }
 
-void		parse_live(t_all* gen, t_token* token)
+void	parse_live(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 2, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 2, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE);
@@ -112,7 +112,7 @@ void		parse_live(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 3));
 }
 
-void		parse_ld(t_all* gen, t_token* token)
+void	parse_ld(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 4, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 2, DIR_ARG_TYPE, IND_ARG_TYPE);
@@ -125,7 +125,7 @@ void		parse_ld(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 5));
 }
 
-void		parse_st(t_all* gen, t_token* token)
+void	parse_st(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 1, REG_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 1, REG_ARG_TYPE);
@@ -138,7 +138,7 @@ void		parse_st(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 5));
 }
 
-void		parse_add(t_all* gen, t_token* token)
+void	parse_add(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 1, REG_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 1, REG_ARG_TYPE);
@@ -155,7 +155,7 @@ void		parse_add(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 7));
 }
 
-void		parse_and(t_all* gen, t_token* token)
+void	parse_and(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 5, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 3, REG_ARG_TYPE, IND_ARG_TYPE, DIR_ARG_TYPE);
@@ -172,7 +172,7 @@ void		parse_and(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 7));
 }
 
-void		parse_ldi(t_all* gen, t_token* token)
+void	parse_ldi(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 5, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 3, REG_ARG_TYPE, IND_ARG_TYPE, DIR_ARG_TYPE);
@@ -189,7 +189,7 @@ void		parse_ldi(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 7));
 }
 
-void		parse_sti(t_all* gen, t_token* token)
+void	parse_sti(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 1, REG_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 1, REG_ARG_TYPE);
@@ -206,7 +206,7 @@ void		parse_sti(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 7));
 }
 
-void		parse_aff(t_all* gen, t_token* token)
+void	parse_aff(t_all *gen, t_token *token)
 {
 	if (!is_equal_token_type(next_token(token, 1), 1, REG_ARG_TYPE))
 		print_expexted_exit(gen, next_token(token, 1), 1, REG_ARG_TYPE);
@@ -215,43 +215,35 @@ void		parse_aff(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 3));
 }
 
-void		parse_op(t_all* gen, t_token* token)
+void	parse_op(t_all *gen, t_token *token)
 {
-	if (!ft_strcmp(token->content, "live")) // T_DIR
-		parse_live(gen, token);
-	else if (!ft_strcmp(token->content, "ld")) // T_DIR|T_IND , T_REG
-		parse_ld(gen, token);
-	else if (!ft_strcmp(token->content, "st")) // T_REG , T_REG|T_IND
-		parse_st(gen, token);
-	else if (!ft_strcmp(token->content, "add")) // 3x T_REG
-		parse_add(gen, token);
-	else if (!ft_strcmp(token->content, "sub")) // add
-		parse_add(gen, token);
-	else if (!ft_strcmp(token->content, "and")) // 3 , 3 , T_REG
-		parse_and(gen, token);
-	else if (!ft_strcmp(token->content, "or")) // and
-		parse_and(gen, token);
-	else if (!ft_strcmp(token->content, "xor")) // and
-		parse_and(gen, token);
-	else if (!ft_strcmp(token->content, "zjmp")) // live
-		parse_live(gen, token);
-	else if (!ft_strcmp(token->content, "ldi")) // T_REG|T_DIR|T_IND , T_REG|T_DIR , T_REG
-		parse_ldi(gen, token);
-	else if (!ft_strcmp(token->content, "sti")) // T_REG , 3 , T_REG|T_DIR
-		parse_sti(gen, token);
-	else if (!ft_strcmp(token->content, "fork")) // live
-		parse_live(gen, token);
-	else if (!ft_strcmp(token->content, "lld")) // ld
-		parse_ld(gen, token);
-	else if (!ft_strcmp(token->content, "lldi")) // ldi
-		parse_ldi(gen, token);
-	else if (!ft_strcmp(token->content, "lfork")) // live
-		parse_live(gen, token);
-	else if (!ft_strcmp(token->content, "aff")) // T_REG
-		parse_aff(gen, token);
+	(!ft_strcmp(token->content, "live") ||
+	!ft_strcmp(token->content, "fork") ||
+	!ft_strcmp(token->content, "zjmp") ||
+	!ft_strcmp(token->content, "lfork")) ?
+		parse_live(gen, token) : 0;
+	(!ft_strcmp(token->content, "ld") ||
+	!ft_strcmp(token->content, "lld")) ?
+		parse_ld(gen, token) : 0;
+	!ft_strcmp(token->content, "st") ?
+		parse_st(gen, token) : 0;
+	(!ft_strcmp(token->content, "add") ||
+	!ft_strcmp(token->content, "sub")) ?
+		parse_add(gen, token) : 0;
+	(!ft_strcmp(token->content, "and") ||
+	!ft_strcmp(token->content, "or") ||
+	!ft_strcmp(token->content, "xor")) ?
+		parse_and(gen, token) : 0;
+	(!ft_strcmp(token->content, "ldi") ||
+	!ft_strcmp(token->content, "lldi")) ?
+		parse_ldi(gen, token) : 0;
+	!ft_strcmp(token->content, "sti") ?
+		parse_sti(gen, token) : 0;
+	!ft_strcmp(token->content, "aff") ?
+		parse_aff(gen, token) : 0;
 }
 
-void		parse_name(t_all* gen, t_token* token)
+void	parse_name(t_all *gen, t_token *token)
 {
 	if (gen->name)
 	{
@@ -265,7 +257,7 @@ void		parse_name(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 2));
 }
 
-void		parse_comment(t_all* gen, t_token* token)
+void	parse_comment(t_all *gen, t_token *token)
 {
 	if (gen->comment)
 	{
@@ -279,7 +271,7 @@ void		parse_comment(t_all* gen, t_token* token)
 	start_analyz(gen, next_token(token, 2));
 }
 
-void		start_analyz(t_all*	gen, t_token* token)
+void	start_analyz(t_all *gen, t_token *token)
 {
 	if (!token || (gen->name && gen->comment && token->type == END_FILE))
 		return ;
@@ -306,7 +298,7 @@ void		start_analyz(t_all*	gen, t_token* token)
 		print_expexted_exit(gen, token, 2, NAME_TYPE, COMMENT_TYPE);
 }
 
-int			is_exist_label(t_token* token, char* s)
+int		is_exist_label(t_token *token, char *s)
 {
 	while (token)
 	{
@@ -317,28 +309,29 @@ int			is_exist_label(t_token* token, char* s)
 	return (0);
 }
 
-void		print_nonexist_label_exit(t_all* gen, t_token* token)
+void	print_nonexist_label_exit(t_all *gen, t_token *token)
 {
 	print_point(token->point);
 	ft_putstr(": Lexical error:\n\tNonexistent label reference\n");
 	do_exit(NULL, gen);
 }
 
-void		check_nonexist_labels(t_all* gen)
+void	check_nonexist_labels(t_all *gen)
 {
-	t_token*	token;
+	t_token *token;
 
 	token = gen->token;
 	while (token)
 	{
-		if (token->type == IND_LABL_ARG_TYPE || token->type == DIR_LABL_ARG_TYPE)
+		if (token->type == IND_LABL_ARG_TYPE ||
+		token->type == DIR_LABL_ARG_TYPE)
 			if (!is_exist_label(gen->token, token->content))
 				print_nonexist_label_exit(gen, token);
 		token = token->next;
 	}
 }
 
-void		lexical_analyz(t_all*	gen)
+void	lexical_analyz(t_all *gen)
 {
 	start_analyz(gen, gen->token);
 	check_nonexist_labels(gen);

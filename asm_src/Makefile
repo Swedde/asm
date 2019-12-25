@@ -6,7 +6,7 @@
 #    By: swedde <swedde@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 19:17:02 by swedde            #+#    #+#              #
-#    Updated: 2019/12/18 01:43:04 by swedde           ###   ########.fr        #
+#    Updated: 2019/12/25 17:24:48 by swedde           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,10 @@ SRC =	src/main.c					\
 		src/print_point.c 			\
 		src/lexical_analyz.c 		\
 		src/recording.c 			\
-		src/write_short_to_file.c
+		src/write_short_to_file.c 	\
+		src/write_byte_to_file.c 	\
+		src/write_nam_com_to_file.c 
+
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,12 +43,8 @@ $(NAME): $(LIB) $(SRC)
 $(LIB):
 	make -C libft/ fclean && make -C libft/
 
-test: $(NAME) test_bin
-	./asm batman.s
-	./test_bin batman.cor
-
-test_bin: test/test_main.c
-	gcc test/test_main.c -o test_bin
+test: $(NAME)
+	diff test.col test.cor
 
 clean:
 	make -C libft/ clean

@@ -6,7 +6,7 @@
 /*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/25 16:04:32 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/25 17:24:28 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ void			recording(t_all *gen);
 void			set_size_code(t_all *gen, t_token *token);
 int				write_short_to_file(t_all *gen, short to_file);
 t_token			*next_token(t_token *token, int i);
+int				write_byte_to_file(t_all *gen, unsigned char c);
+int				write_nam_com_to_file(t_all *gen, int len, int type);
 
 #endif

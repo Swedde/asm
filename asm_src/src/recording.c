@@ -3,32 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   recording.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 00:11:50 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/24 17:09:28 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/25 16:08:52 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-typedef struct	s_string
-{
-	int		len;
-	char*	s;
-}				t_string;
-
-int		write_byte_to_file(t_all* gen, unsigned char c)
+int		write_byte_to_file(t_all *gen, unsigned char c)
 {
 	if (write(gen->fd, &c, 1) == -1)
 	{
-		ft_putendl("Error: Failed to write to file ");
+		ft_putendl("Error: Failed to write to file");
 		do_exit(NULL, gen);
 	}
 	return (1);
 }
 
-int		write_string_to_file(int fd, char*	s,	int len)
+int		write_string_to_file(int fd, char *s, int len)
 {
 	int				i;
 	unsigned char	c;
@@ -49,7 +43,7 @@ int		write_string_to_file(int fd, char*	s,	int len)
 	return (0);
 }
 
-int		write_nam_com_to_file(t_all* gen, int len, int type)
+int		write_nam_com_to_file(t_all *gen, int len, int type)
 {
 	t_token*	token;
 
@@ -61,7 +55,7 @@ int		write_nam_com_to_file(t_all* gen, int len, int type)
 		print_point(token->point);
 		ft_putstr(": Constant error:\n\t");
 		print_token(token);
-		ft_putendl(" is too long");
+		ft_putendl(" size exceeded");
 		do_exit(NULL, gen);
 	}
 	write_string_to_file(gen->fd, token->content, len);
@@ -69,7 +63,7 @@ int		write_nam_com_to_file(t_all* gen, int len, int type)
 	return (1);
 }
 
-void		op_dir(t_all* gen, t_token* token, char op_c, int dir_size)
+int		op_dir(t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	token->op_code = op_c;
 	token->arg_code = 0;
@@ -77,9 +71,10 @@ void		op_dir(t_all* gen, t_token* token, char op_c, int dir_size)
 	token->next->dir_size = dir_size;
 	token->next->size = gen->op_size;
 	set_size_code(gen, next_token(token, 3));
+	return (0);
 }
 
-void		op_dirind_reg(t_all* gen, t_token* token, char op_c, int dir_size)
+void	op_dirind_reg(t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
@@ -107,7 +102,7 @@ void		op_dirind_reg(t_all* gen, t_token* token, char op_c, int dir_size)
 	set_size_code(gen, next_token(token, 5));
 }
 
-void		op_reg_regdirind_regdir(t_all *gen, t_token *token, char op_c, int dir_size)
+void	op_reg_regdirind_regdir(t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
@@ -152,7 +147,7 @@ void		op_reg_regdirind_regdir(t_all *gen, t_token *token, char op_c, int dir_siz
 	set_size_code(gen, next_token(token, 7));
 }
 
-int			op_reg_regind(t_all *gen, t_token *token, char op_c)
+int		op_reg_regind(t_all *gen, t_token *token, char op_c)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
@@ -178,7 +173,7 @@ int			op_reg_regind(t_all *gen, t_token *token, char op_c)
 	return (0);
 }
 
-int			op_reg_reg_reg(t_all *gen, t_token *token, char op_c)
+int		op_reg_reg_reg(t_all *gen, t_token *token, char op_c)
 {
 	token->op_code = op_c;
 	gen->size += 4;
@@ -188,7 +183,7 @@ int			op_reg_reg_reg(t_all *gen, t_token *token, char op_c)
 }
 
 
-int			op_regdirind_regdirind_reg(t_all *gen, t_token *token, char op_c, int dir_size)
+int		op_regdirind_regdirind_reg(t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
@@ -238,7 +233,7 @@ int			op_regdirind_regdirind_reg(t_all *gen, t_token *token, char op_c, int dir_
 	return (0);
 }
 
-int			op_regdirind_regdir_reg(t_all *gen, t_token *token, char op_c, int dir_size)
+int		op_regdirind_regdir_reg(t_all *gen, t_token *token, char op_c, int dir_size)
 {
 	unsigned char	arg_1;
 	unsigned char	arg_2;
@@ -282,7 +277,7 @@ int			op_regdirind_regdir_reg(t_all *gen, t_token *token, char op_c, int dir_siz
 	return (0);
 }
 
-int			op_reg(t_all *gen, t_token *token, char op_c)
+int		op_reg(t_all *gen, t_token *token, char op_c)
 {
 	gen->size += 2;
 	token->op_code = op_c;
@@ -291,7 +286,7 @@ int			op_reg(t_all *gen, t_token *token, char op_c)
 	return (0);
 }
 
-void		get_op_code(t_all *gen, t_token *token)
+void	get_op_code(t_all *gen, t_token *token)
 {
 	if (!ft_strcmp(token->content, "live"))
 		op_dir(gen, token, 1, 4);
@@ -327,15 +322,16 @@ void		get_op_code(t_all *gen, t_token *token)
 		op_reg(gen, token, 16);
 }
 
-void		set_op_size(t_all* gen, t_token* token)
+int		set_op_size(t_all *gen, t_token *token)
 {
 	token->size = gen->size;
 	gen->op_size = gen->size;
 	gen->size++;
 	get_op_code(gen, token);
+	return (0);
 }
 
-void		set_size_code(t_all* gen, t_token* token)
+void	set_size_code(t_all *gen, t_token *token)
 {
 	if (token->type == END_FILE)
 		return ;
@@ -350,7 +346,7 @@ void		set_size_code(t_all* gen, t_token* token)
 		set_size_code(gen, token->next);
 }
 
-int			get_label_value(t_token* start, t_token* token)
+int		get_label_value(t_token *start, t_token *token)
 {
 	while (start)
 	{
@@ -361,15 +357,16 @@ int			get_label_value(t_token* start, t_token* token)
 	return (0);
 }
 
-void		write_exec_code_to_file(t_all* gen, t_token* token)
+void	write_exec_code_to_file(t_all *gen, t_token *token)
 {
 	while (token)
 	{
 		if (token->type == OP_TYPE && write_byte_to_file(gen, token->op_code))
-		{
-			if (token->arg_code)
-				write_byte_to_file(gen, token->arg_code);
-		}
+			token->arg_code ? write_byte_to_file(gen, token->arg_code) : 0;
+	//	{
+	//		if (token->arg_code)
+	//			write_byte_to_file(gen, token->arg_code);
+	//	}
 		else if (token->type == REG_ARG_TYPE)
 			write_byte_to_file(gen, (unsigned char)ft_atoi(token->content));
 		else if (token->type == DIR_ARG_TYPE)
@@ -390,7 +387,7 @@ void		write_exec_code_to_file(t_all* gen, t_token* token)
 	}
 }
 
-void		recording(t_all* gen)
+void	recording(t_all *gen)
 {
 	if ((gen->fd = open(gen->file_name, O_RDWR|O_CREAT|O_TRUNC, 0777)) == -1)
 	{

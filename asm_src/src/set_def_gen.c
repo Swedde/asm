@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_def_gen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 14:29:01 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/19 13:55:50 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/25 16:00:25 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static int		get_file_name(t_all* gen, char *s)
 	while (s[i] != '.' && i > -1)
 		i--;
 	if (i == -1)
-		gen->file_name = ft_strjoin(s, ".con");
+		gen->file_name = ft_strjoin(s, ".col");
 	else
 	{
 		tmp = ft_strsub(s, 0, i);
-		gen->file_name = ft_strjoin(tmp, ".con");
+		gen->file_name = ft_strjoin(tmp, ".col");
 		free(tmp);
 	}
 	return (0);

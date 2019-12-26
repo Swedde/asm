@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   set_def_gen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 14:29:01 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/25 16:00:25 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 19:08:19 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int		get_file_name(t_all* gen, char *s)
+static int		get_file_name(t_all *gen, char *s)
 {
 	char	*tmp;
-	int i;
+	int		i;
 
 	tmp = NULL;
 	i = ft_strlen(s) - 1;
@@ -32,9 +32,9 @@ static int		get_file_name(t_all* gen, char *s)
 	return (0);
 }
 
-static t_all*	creat_t_all(void)
+static t_all	*creat_t_all(void)
 {
-	t_all*		gen;
+	t_all *gen;
 
 	gen = NULL;
 	gen = (t_all*)malloc(sizeof(t_all));
@@ -43,25 +43,25 @@ static t_all*	creat_t_all(void)
 		ft_putendl("Error: didn't allocated memory");
 		exit(-1);
 	}
-	gen->i				= 0;
-	gen->point.x		= 1;
-	gen->point.y		= 1;
-	gen->fd				= 0;
-	gen->fd_s			= 0;
-	gen->file_name		= NULL;
-	gen->comment		= 0;
-	gen->name			= 0;
-	gen->token			= NULL;
-	gen->file			= NULL;
-	gen->size			= 0;
-	gen->error			= NULL;
+	gen->i = 0;
+	gen->point.x = 1;
+	gen->point.y = 1;
+	gen->fd = 0;
+	gen->fd_s = 0;
+	gen->file_name = NULL;
+	gen->comment = 0;
+	gen->name = 0;
+	gen->token = NULL;
+	gen->file = NULL;
+	gen->size = 0;
+	gen->error = NULL;
 	return (gen);
 }
 
-static	int		get_file(t_all* gen)
+static int		get_file(t_all *gen)
 {
-	char*	line;
-	char*	buf;
+	char	*line;
+	char	*buf;
 
 	gen->file = ft_strnew(0);
 	buf = ft_strnew(1);
@@ -75,14 +75,16 @@ static	int		get_file(t_all* gen)
 	return (0);
 }
 
-t_all*			set_def_gen(char *s)
+t_all			*set_def_gen(char *s)
 {
-	t_all*	gen;
-	char*	tmp;
+	t_all	*gen;
+	char	*tmp;
 
+	tmp = NULL;
 	gen = creat_t_all();
 	get_file_name(gen, s);
-	if (((gen->fd_s = open(s, O_RDONLY)) == -1) || (read(gen->fd_s, tmp, 0) < 0))
+	if (((gen->fd_s = open(s, O_RDONLY)) == -1) ||
+	(read(gen->fd_s, tmp, 0) < 0))
 	{
 		ft_putstr("Error: Failed to read file ");
 		ft_putendl(s);

@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 22:58:42 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 16:18:21 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/26 19:45:58 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 void	print_token_type(int i)
 {
-	if (i == 1)
+	if (i == NAME_TYPE)
 		ft_putstr("NAME");
-	if (i == 2)
+	else if (i == COMMENT_TYPE)
 		ft_putstr("COMMENT");
-	if (i == 3)
+	else if (i == NL_TYPE)
 		ft_putstr("NEW LINE");
-	if (i == 4)
+	else if (i == LABEL_TYPE)
 		ft_putstr("LABEL");
-	if (i == 5)
+	else if (i == DELIM_TYPE)
 		ft_putstr("SEPARATOR");
-	if (i == 6)
+	else if (i == OP_TYPE)
 		ft_putstr("INSTRUCTION");
-	if (i == 7)
+	else if (i == REG_ARG_TYPE)
 		ft_putstr("REGISTER");
-	if (i == 8)
+	else if (i == DIR_ARG_TYPE)
 		ft_putstr("DIRECT ARG");
-	if (i == 9)
+	else if (i == DIR_LABL_ARG_TYPE)
 		ft_putstr("DIRECT LABEL");
-	if (i == 10)
+	else if (i == IND_ARG_TYPE)
 		ft_putstr("INDIRECT ARG");
-	if (i == 11)
+	else if (i == IND_LABL_ARG_TYPE)
 		ft_putstr("INDIRECT LABEL");
-	if (i == 12)
+	else if (i == END_FILE)
 		ft_putstr("END FILE");
 }
 

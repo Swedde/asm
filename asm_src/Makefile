@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: swedde <swedde@student.42.fr>              +#+  +:+       +#+         #
+#    By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 19:17:02 by swedde            #+#    #+#              #
-#    Updated: 2019/12/25 17:24:48 by swedde           ###   ########.fr        #
+#    Updated: 2019/12/26 18:46:37 by nsheev           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIB) $(SRC)
-	gcc -c -I./libft/includes -I./includes $(SRC)
+	gcc -c -Wall -Werror -Wextra -I./libft/includes -I./includes $(SRC)
 	gcc *.o $(INC) -o asm -L libft/ -lft
 
 $(LIB):

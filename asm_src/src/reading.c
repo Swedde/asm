@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/26 15:50:33 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/26 20:21:11 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ int			is_delim(char c)
 		c == SEPARATOR_CHAR ||
 		c == DIRECT_CHAR ||
 		c == '\0' ||
-		c == LABEL_CHAR
-	)
+		c == LABEL_CHAR)
 		return (1);
 	return (0);
 }
 
-int			is_char_labl(char c, char* pattern)
+int			is_char_labl(char c, char *pattern)
 {
 	int i;
 
@@ -41,7 +40,7 @@ int			is_char_labl(char c, char* pattern)
 	return (0);
 }
 
-t_point		get_point(t_all* gen)
+t_point		get_point(t_all *gen)
 {
 	t_point	point;
 
@@ -50,7 +49,7 @@ t_point		get_point(t_all* gen)
 	return (point);
 }
 
-static int	increment_point(t_all* gen)
+static int	increment_point(t_all *gen)
 {
 	if (gen->file[gen->i] == '\n')
 	{
@@ -62,16 +61,15 @@ static int	increment_point(t_all* gen)
 	return (0);
 }
 
-void		find_name_comment(t_all* gen, int type, char* command)
+void		find_name_comment(t_all *gen, int type, char *command)
 {
 	int		j;
 	int		j1;
-	char*	error;
-	char*	tmp;
-	char*	buf;
+	char	*error;
+	char	*tmp;
+	char	*buf;
 
 	j = gen->i + ft_strlen(command);
-	//ищу ковычки
 	while (gen->file[j] != '"')
 	{
 		while (gen->file[j] == ' ' || gen->file[j] == '\t')
@@ -82,7 +80,6 @@ void		find_name_comment(t_all* gen, int type, char* command)
 			do_exit(&error, gen);
 		}
 	}
-	//нашел первые ковычки, ищу вторые
 	tmp = ft_strsub(gen->file, j + 1, ft_strlen(gen->file) - j);
 	buf = tmp;
 	j1 = 0;
@@ -105,7 +102,7 @@ void		find_name_comment(t_all* gen, int type, char* command)
 	}
 }
 
-int			is_label(t_all* gen)
+int			is_label(t_all *gen)
 {
 	int i;
 
@@ -119,10 +116,10 @@ int			is_label(t_all* gen)
 	return (0);
 }
 
-int			find_label(t_all* gen)
+int			find_label(t_all *gen)
 {
-	char*	tmp;
-	int j;
+	char	*tmp;
+	int		j;
 
 	j = gen->i;
 	while (gen->file[j] != LABEL_CHAR)
@@ -135,32 +132,34 @@ int			find_label(t_all* gen)
 	return (1);
 }
 
-int			is_op(t_all* gen)
+int			is_op(t_all *gen)
 {
-	char*	s;
+	char	*s;
 
 	s = &gen->file[gen->i];
-	if ((!ft_strcmp(s, ft_strstr(s, "live")) && is_delim(s[4]) && s[4] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "ld")) && is_delim(s[2]) && s[2] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "st")) && is_delim(s[2]) && s[2] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "add")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "sub")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "and")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "or")) && is_delim(s[2]) && s[2] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "xor")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "zjmp")) && is_delim(s[4]) && s[4] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "ldi")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "sti")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "fork")) && is_delim(s[4]) && s[4] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "lld")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "lldi")) && is_delim(s[4]) && s[4] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "lfork")) && is_delim(s[5]) && s[5] != LABEL_CHAR) ||
-	(!ft_strcmp(s, ft_strstr(s, "aff")) && is_delim(s[3]) && s[3] != LABEL_CHAR))
-		return (1);
-	return (0);
+	return ((!ft_strcmp(s, ft_strstr(s, "live")) && is_delim(s[4]) && s[4] !=
+	LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "ld")) && is_delim(s[2]) && s[2]
+	!= LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "st")) && is_delim(s[2]) &&
+	s[2] != LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "add")) &&
+	is_delim(s[3]) && s[3] != LABEL_CHAR) || (!ft_strcmp(s,
+	ft_strstr(s, "sub")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
+	(!ft_strcmp(s, ft_strstr(s, "and")) && is_delim(s[3]) && s[3] !=
+	LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "or")) && is_delim(s[2]) && s[2]
+	!= LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "xor")) && is_delim(s[3]) &&
+	s[3] != LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "zjmp")) &&
+	is_delim(s[4]) && s[4] != LABEL_CHAR) || (!ft_strcmp(s,
+	ft_strstr(s, "ldi")) && is_delim(s[3]) && s[3] != LABEL_CHAR) ||
+	(!ft_strcmp(s, ft_strstr(s, "sti")) && is_delim(s[3]) && s[3] !=
+	LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "fork")) && is_delim(s[4]) &&
+	s[4] != LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "lld")) &&
+	is_delim(s[3]) && s[3] != LABEL_CHAR) || (!ft_strcmp(s,
+	ft_strstr(s, "lldi")) && is_delim(s[4]) && s[4] != LABEL_CHAR) ||
+	(!ft_strcmp(s, ft_strstr(s, "lfork")) && is_delim(s[5]) && s[5] !=
+	LABEL_CHAR) || (!ft_strcmp(s, ft_strstr(s, "aff")) && is_delim(s[3]) &&
+	s[3] != LABEL_CHAR));
 }
 
-char*		get_op(char* s)
+char		*get_op(char *s)
 {
 	if (!ft_strcmp(s, ft_strstr(s, "live")))
 		return (ft_strdup("live"));
@@ -197,12 +196,13 @@ char*		get_op(char* s)
 	return (NULL);
 }
 
-void		find_op(t_all* gen)
+void		find_op(t_all *gen)
 {
-	char*	tmp;
-	int j;
+	char	*tmp;
+	int		j;
 
-	j = ft_strlen(tmp = get_op(&gen->file[gen->i]));
+	tmp = get_op(&gen->file[gen->i]);
+	j = ft_strlen(tmp);
 	push_tail_token(&gen->token, OP_TYPE, tmp, gen->point);
 	free(tmp);
 	while (j)
@@ -227,7 +227,7 @@ int			num_len(int num)
 	return (i);
 }
 
-int			is_reg_arg(char* s)
+int			is_reg_arg(char *s)
 {
 	int		i;
 	int		j;
@@ -241,7 +241,7 @@ int			is_reg_arg(char* s)
 	{
 		j = ft_atoi(&s[i]);
 		if (j > 99)
-			return 0;
+			return (0);
 		i += num_len(j);
 		if (is_delim(s[i]))
 			return (1);
@@ -249,10 +249,10 @@ int			is_reg_arg(char* s)
 	return (0);
 }
 
-void		find_reg_arg(t_all* gen)
+void		find_reg_arg(t_all *gen)
 {
 	int		j;
-	char*	tmp;
+	char	*tmp;
 
 	j = gen->i + 1;
 	while (gen->file[j] == '0')
@@ -265,7 +265,7 @@ void		find_reg_arg(t_all* gen)
 		increment_point(gen);
 }
 
-int			is_dir_arg(char* s)
+int			is_dir_arg(char *s)
 {
 	int i;
 
@@ -283,11 +283,10 @@ int			is_dir_arg(char* s)
 	return (0);
 }
 
-void		find_dir_arg(t_all* gen)
+void		find_dir_arg(t_all *gen)
 {
 	int		j;
-	char*	tmp;
-	int		zero;
+	char	*tmp;
 
 	j = gen->i + 1;
 	while (gen->file[j] == ' ' || gen->file[j] == '\t')
@@ -303,7 +302,7 @@ void		find_dir_arg(t_all* gen)
 		increment_point(gen);
 }
 
-int			is_dir_labl_arg(char* s)
+int			is_dir_labl_arg(char *s)
 {
 	int i;
 
@@ -323,10 +322,10 @@ int			is_dir_labl_arg(char* s)
 	return (0);
 }
 
-void		find_dir_labl_arg(t_all* gen)
+void		find_dir_labl_arg(t_all *gen)
 {
 	int		j;
-	char*	tmp;
+	char	*tmp;
 	int		start;
 
 	j = gen->i + 1;
@@ -342,7 +341,7 @@ void		find_dir_labl_arg(t_all* gen)
 		increment_point(gen);
 }
 
-int			is_ind_arg(char* s)
+int			is_ind_arg(char *s)
 {
 	int i;
 
@@ -358,10 +357,10 @@ int			is_ind_arg(char* s)
 	return (0);
 }
 
-void		find_ind_arg(t_all* gen)
+void		find_ind_arg(t_all *gen)
 {
-	int j;
-	char*	tmp;
+	int		j;
+	char	*tmp;
 	int		start;
 
 	j = gen->i;
@@ -377,7 +376,7 @@ void		find_ind_arg(t_all* gen)
 		increment_point(gen);
 }
 
-int			is_ind_labl_arg(char* s)
+int			is_ind_labl_arg(char *s)
 {
 	int i;
 
@@ -393,10 +392,10 @@ int			is_ind_labl_arg(char* s)
 	return (0);
 }
 
-void		find_ind_labl_arg(t_all* gen)
+void		find_ind_labl_arg(t_all *gen)
 {
 	int		j;
-	char*	tmp;
+	char	*tmp;
 	int		start;
 
 	j = gen->i + 1;
@@ -412,9 +411,9 @@ void		find_ind_labl_arg(t_all* gen)
 		increment_point(gen);
 }
 
-void		find_nl_or_separ(t_all* gen)
+void		find_nl_or_separ(t_all *gen)
 {
-	char*	tmp;
+	char	*tmp;
 
 	tmp = gen->file[gen->i] == '\n' ? char_to_string('\n') : char_to_string(SEPARATOR_CHAR);
 	push_tail_token(&gen->token, gen->file[gen->i] == '\n' ? NL_TYPE : DELIM_TYPE, tmp, gen->point);
@@ -422,14 +421,14 @@ void		find_nl_or_separ(t_all* gen)
 	increment_point(gen);
 }
 
-int			reading(t_all*	gen)
+int			reading(t_all *gen)
 {
 	while (gen->file[gen->i])
 	{
 		while ((gen->file[gen->i] == ' ' || gen->file[gen->i] == '\t') && gen->file[gen->i])
 			increment_point(gen);
 		if (!gen->file[gen->i])
-			break;
+			break ;
 		if (gen->file[gen->i] == COMMENT_CHAR || gen->file[gen->i] == ';')
 			while (gen->file[gen->i] != '\n' && gen->file[gen->i])
 				increment_point(gen);
@@ -457,11 +456,12 @@ int			reading(t_all*	gen)
 		{
 			print_point(gen->point);
 			ft_putstr(": Unknown token: ");
-			while (gen->file[gen->i] && gen->file[gen->i] != ' ' && gen->file[gen->i] != '\t')
+			while (gen->file[gen->i] && gen->file[gen->i] != ' ' && gen->file[gen->i] != '\t' && gen->file[gen->i] != '\n')
 			{
 				ft_putchar(gen->file[gen->i]);
 				gen->i++;
 			}
+			write(1, "\n", 1);
 			do_exit(NULL, gen);
 		}
 	}

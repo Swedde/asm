@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   char_to_string.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 21:56:48 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/15 21:57:06 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 18:59:48 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-char*		char_to_string(char c)
+char	*char_to_string(char c)
 {
-	char*	s;
+	char *s;
 
 	s = ft_strnew(1);
 	s[0] = c;
-	return s;
+	return (s);
 }

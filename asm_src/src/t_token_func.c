@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   t_token_func.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 00:46:14 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/16 02:23:50 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 18:58:28 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-t_token*	new_token(int type, char* content, t_point point)
+t_token		*new_token(int type, char *content, t_point point)
 {
-	t_token*	new;
+	t_token *new;
 
 	new = (t_token*)malloc(sizeof(t_token));
 	new->type = type;
@@ -25,9 +25,9 @@ t_token*	new_token(int type, char* content, t_point point)
 	return (new);
 }
 
-void		push_tail_token(t_token** head, int type, char* con, t_point point)
+void		push_tail_token(t_token **head, int type, char *con, t_point point)
 {
-	t_token*	tmp;
+	t_token *tmp;
 
 	if (!*head)
 		*head = new_token(type, con, point);
@@ -40,9 +40,9 @@ void		push_tail_token(t_token** head, int type, char* con, t_point point)
 	}
 }
 
-void		lst_del_token(t_token* token)
+void		lst_del_token(t_token *token)
 {
-	t_token*	tmp;
+	t_token *tmp;
 
 	tmp = token;
 	while (token)
@@ -53,7 +53,7 @@ void		lst_del_token(t_token* token)
 		tmp = token;
 	}
 }
-
+/*
 void		print_token(t_token*	token)
 {
 
@@ -77,3 +77,4 @@ void		print_token(t_token*	token)
 	}
 	printf("\n");
 }
+*/

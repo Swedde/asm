@@ -1,11 +1,12 @@
 .name "timorinn"
 .comment "toxic"
 live	%1
-ld     4, r2
+point:ld     4, r2
 st	r4 , 18
 add	r2 , r3 , r4
 sub	r4, r5, r6
 and	%8 , 7 , r4
+and	:point , 7 , r4
 or 9, %-8 , r10
 xor	0, %0, r8
 zjmp %123

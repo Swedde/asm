@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_nam_com_to_file.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/25 17:22:43 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/25 17:23:26 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 19:25:34 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static int	write_string_to_file(int fd, char *s, int len)
 
 int			write_nam_com_to_file(t_all *gen, int len, int type)
 {
-	t_token*	token;
+	t_token *token;
 
 	token = gen->token;
 	while (token->type != type)
 		token = token->next;
-	if (ft_strlen(token->content) > len)
+	if (ft_strlen(token->content) > (size_t)len)
 	{
 		print_point(token->point);
 		ft_putstr(": Constant error:\n\t");
-		print_token(token);
+		print_token_type(token->type);
 		ft_putendl(" size exceeded");
 		do_exit(NULL, gen);
 	}

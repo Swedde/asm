@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/25 17:24:28 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 19:41:05 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int				write_short_to_file(t_all *gen, short to_file);
 t_token			*next_token(t_token *token, int i);
 int				write_byte_to_file(t_all *gen, unsigned char c);
 int				write_nam_com_to_file(t_all *gen, int len, int type);
+void	print_token_type(int i);
 
 #endif

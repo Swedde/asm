@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recording.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 00:11:50 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/25 18:33:10 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 15:57:25 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	get_op_code(t_all *gen, t_token *token)
 		op_regdirind_regdir_reg(gen, token, 10, 2) : 0;
 	!ft_strcmp(token->content, "sti") ?
 		op_reg_regdirind_regdir(gen, token, 11, 2) : 0;
- 	!ft_strcmp(token->content, "fork") ? op_dir(gen, token, 12, 2) : 0;
+	!ft_strcmp(token->content, "fork") ? op_dir(gen, token, 12, 2) : 0;
 	!ft_strcmp(token->content, "lld") ? op_dirind_reg(gen, token, 13, 4) : 0;
 	!ft_strcmp(token->content, "lldi") ?
 		op_regdirind_regdir_reg(gen, token, 14, 2) : 0;
@@ -237,7 +237,8 @@ void	write_exec_code_to_file(t_all *gen, t_token *token)
 
 void	recording(t_all *gen)
 {
-	if ((gen->fd = open(gen->file_name, O_RDWR|O_CREAT|O_TRUNC, 0777)) == -1)
+	if ((gen->fd = open(gen->file_name, O_RDWR | O_CREAT | O_TRUNC, 0777))
+	== -1)
 	{
 		ft_putendl("Error: Failed to create file");
 		do_exit(NULL, gen);
@@ -250,5 +251,5 @@ void	recording(t_all *gen)
 	write_exec_code_to_file(gen, gen->token);
 	ft_putstr("Writing output program to ");
 	ft_putendl(gen->file_name);
-    close(gen->fd);
+	close(gen->fd);
 }

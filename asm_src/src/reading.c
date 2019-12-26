@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/19 15:33:31 by nsheev           ###   ########.fr       */
+/*   Updated: 2019/12/26 15:50:33 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,10 +433,8 @@ int			reading(t_all*	gen)
 		if (gen->file[gen->i] == COMMENT_CHAR || gen->file[gen->i] == ';')
 			while (gen->file[gen->i] != '\n' && gen->file[gen->i])
 				increment_point(gen);
-		//search name
 		else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i], NAME_CMD_STRING)))
 			find_name_comment(gen, NAME_TYPE, NAME_CMD_STRING);
-		//search comment
 		else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i], COMMENT_CMD_STRING)))
 			find_name_comment(gen, COMMENT_TYPE, COMMENT_CMD_STRING);
 		else if (gen->file[gen->i] == '\n' || gen->file[gen->i] == SEPARATOR_CHAR)
@@ -457,8 +455,13 @@ int			reading(t_all*	gen)
 			find_ind_labl_arg(gen);
 		else
 		{
-			printf("Ln %d, Col %d: Syntax error '%c'\n%s\n", gen->point.x, gen->point.y, gen->file[gen->i], &gen->file[gen->i]);
-			print_token(gen->token);
+			print_point(gen->point);
+			ft_putstr(": Unknown token: ");
+			while (gen->file[gen->i] && gen->file[gen->i] != ' ' && gen->file[gen->i] != '\t')
+			{
+				ft_putchar(gen->file[gen->i]);
+				gen->i++;
+			}
 			do_exit(NULL, gen);
 		}
 	}

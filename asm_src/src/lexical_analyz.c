@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analyz.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 22:58:42 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/25 18:30:55 by swedde           ###   ########.fr       */
+/*   Updated: 2019/12/26 16:18:21 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	print_expexted_exit(t_all *gen, t_token *token, int i, ...)
 	va_start(ap, i);
 	print_point(token->point);
 	ft_putstr(": Lexical error: \"");
-	if (token->type == NL_TYPE)
-		ft_putstr("NEW LINE");
-	else
-		ft_putstr(token->content);
+	token->type == NL_TYPE ? ft_putstr("NEW LINE") : ft_putstr(token->content);
 	ft_putstr("\"\n\tToken type: ");
 	print_token_type(token->type);
 	ft_putstr("\n\tExpected type: ");
@@ -105,8 +102,10 @@ int		is_equal_token_type(t_token *token, int i, ...)
 
 void	parse_live(t_all *gen, t_token *token)
 {
-	if (!is_equal_token_type(next_token(token, 1), 2, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 1), 2, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 1), 2, DIR_ARG_TYPE,
+	DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 1), 2, DIR_ARG_TYPE,
+		DIR_LABL_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 2), 1, NL_TYPE))
 		print_expexted_exit(gen, next_token(token, 2), 1, NL_TYPE);
 	start_analyz(gen, next_token(token, 3));
@@ -114,8 +113,10 @@ void	parse_live(t_all *gen, t_token *token)
 
 void	parse_ld(t_all *gen, t_token *token)
 {
-	if (!is_equal_token_type(next_token(token, 1), 4, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 1), 2, DIR_ARG_TYPE, IND_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 1), 4, DIR_ARG_TYPE,
+	DIR_LABL_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 1), 2, DIR_ARG_TYPE,
+		IND_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 2), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 2), 1, DELIM_TYPE);
 	if (!is_equal_token_type(next_token(token, 3), 1, REG_ARG_TYPE))
@@ -131,8 +132,10 @@ void	parse_st(t_all *gen, t_token *token)
 		print_expexted_exit(gen, next_token(token, 1), 1, REG_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 2), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 2), 1, DELIM_TYPE);
-	if (!is_equal_token_type(next_token(token, 3), 3, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 3), 2, REG_ARG_TYPE, IND_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 3), 3, REG_ARG_TYPE,
+	IND_ARG_TYPE, IND_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 3), 2, REG_ARG_TYPE,
+		IND_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 4), 1, NL_TYPE))
 		print_expexted_exit(gen, next_token(token, 4), 1, NL_TYPE);
 	start_analyz(gen, next_token(token, 5));
@@ -157,12 +160,16 @@ void	parse_add(t_all *gen, t_token *token)
 
 void	parse_and(t_all *gen, t_token *token)
 {
-	if (!is_equal_token_type(next_token(token, 1), 5, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 1), 3, REG_ARG_TYPE, IND_ARG_TYPE, DIR_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 1), 5, REG_ARG_TYPE,
+	IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 1), 3, REG_ARG_TYPE,
+		IND_ARG_TYPE, DIR_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 2), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 2), 1, DELIM_TYPE);
-	if (!is_equal_token_type(next_token(token, 3), 5, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 3), 3, REG_ARG_TYPE, IND_ARG_TYPE, DIR_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 3), 5, REG_ARG_TYPE,
+	IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 3), 3, REG_ARG_TYPE,
+		IND_ARG_TYPE, DIR_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 4), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 4), 1, DELIM_TYPE);
 	if (!is_equal_token_type(next_token(token, 5), 1, REG_ARG_TYPE))
@@ -174,12 +181,16 @@ void	parse_and(t_all *gen, t_token *token)
 
 void	parse_ldi(t_all *gen, t_token *token)
 {
-	if (!is_equal_token_type(next_token(token, 1), 5, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 1), 3, REG_ARG_TYPE, IND_ARG_TYPE, DIR_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 1), 5, REG_ARG_TYPE,
+	IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 1), 3, REG_ARG_TYPE,
+		IND_ARG_TYPE, DIR_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 2), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 2), 1, DELIM_TYPE);
-	if (!is_equal_token_type(next_token(token, 3), 3, REG_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 3), 3, REG_ARG_TYPE, DIR_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 3), 3, REG_ARG_TYPE,
+	DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 3), 3, REG_ARG_TYPE,
+		DIR_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 4), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 4), 1, DELIM_TYPE);
 	if (!is_equal_token_type(next_token(token, 5), 1, REG_ARG_TYPE))
@@ -195,12 +206,16 @@ void	parse_sti(t_all *gen, t_token *token)
 		print_expexted_exit(gen, next_token(token, 1), 1, REG_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 2), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 2), 1, DELIM_TYPE);
-	if (!is_equal_token_type(next_token(token, 3), 5, REG_ARG_TYPE, IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 3), 3, REG_ARG_TYPE, IND_ARG_TYPE, DIR_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 3), 5, REG_ARG_TYPE,
+	IND_ARG_TYPE, IND_LABL_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 3), 3, REG_ARG_TYPE,
+		IND_ARG_TYPE, DIR_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 4), 1, DELIM_TYPE))
 		print_expexted_exit(gen, next_token(token, 4), 1, DELIM_TYPE);
-	if (!is_equal_token_type(next_token(token, 5), 3, REG_ARG_TYPE, DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
-		print_expexted_exit(gen, next_token(token, 5), 2, REG_ARG_TYPE, DIR_ARG_TYPE);
+	if (!is_equal_token_type(next_token(token, 5), 3, REG_ARG_TYPE,
+	DIR_ARG_TYPE, DIR_LABL_ARG_TYPE))
+		print_expexted_exit(gen, next_token(token, 5), 2, REG_ARG_TYPE,
+		DIR_ARG_TYPE);
 	if (!is_equal_token_type(next_token(token, 6), 1, NL_TYPE))
 		print_expexted_exit(gen, next_token(token, 6), 1, NL_TYPE);
 	start_analyz(gen, next_token(token, 7));

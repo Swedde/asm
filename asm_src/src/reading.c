@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2019/12/26 20:21:11 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/14 18:04:53 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,41 +65,28 @@ void		find_name_comment(t_all *gen, int type, char *command)
 {
 	int		j;
 	int		j1;
-	char	*error;
 	char	*tmp;
 	char	*buf;
 
 	j = gen->i + ft_strlen(command);
-	while (gen->file[j] != '"')
-	{
-		while (gen->file[j] == ' ' || gen->file[j] == '\t')
-			j++;
-		if (gen->file[j] != '"')
-		{
-			error = ft_strdup("Name: no \"");
-			do_exit(&error, gen);
-		}
-	}
+	while (gen->file[j] != '"' && (gen->file[j] == ' ' || gen->file[j] == '\t'))
+		j++;
+	if (gen->file[j] != '"' && (gen->error = ft_strdup("Name: Can't find \"")))
+		do_exit(&gen->error, gen);
 	tmp = ft_strsub(gen->file, j + 1, ft_strlen(gen->file) - j);
 	buf = tmp;
 	j1 = 0;
 	while (buf[j1] != '"' && buf[j1])
 		j1++;
-	if (!buf[j1])
-	{
-		error = ft_strdup("End file in searching second \"");
-		do_exit(&error, gen);
-	}
+	if (!buf[j1] && (gen->error = ft_strdup("End file in searching second \"")))
+		do_exit(&gen->error, gen);
 	tmp = ft_strsub(tmp, 0, j1);
 	ft_strdel(&buf);
 	push_tail_token(&gen->token, type, tmp, gen->point);
 	ft_strdel(&tmp);
 	j = j - gen->i + j1 + 2;
-	while (j)
-	{
+	while (j && (j-- || 1))
 		increment_point(gen);
-		j--;
-	}
 }
 
 int			is_label(t_all *gen)
@@ -159,25 +146,9 @@ int			is_op(t_all *gen)
 	s[3] != LABEL_CHAR));
 }
 
-char		*get_op(char *s)
+char		*get_op_helper(char *s)
 {
-	if (!ft_strcmp(s, ft_strstr(s, "live")))
-		return (ft_strdup("live"));
-	else if (!ft_strcmp(s, ft_strstr(s, "ldi")))
-		return (ft_strdup("ldi"));
-	else if (!ft_strcmp(s, ft_strstr(s, "ld")))
-		return (ft_strdup("ld"));
-	else if (!ft_strcmp(s, ft_strstr(s, "sti")))
-		return (ft_strdup("sti"));
-	else if (!ft_strcmp(s, ft_strstr(s, "st")))
-		return (ft_strdup("st"));
-	else if (!ft_strcmp(s, ft_strstr(s, "add")))
-		return (ft_strdup("add"));
-	else if (!ft_strcmp(s, ft_strstr(s, "sub")))
-		return (ft_strdup("sub"));
-	else if (!ft_strcmp(s, ft_strstr(s, "and")))
-		return (ft_strdup("and"));
-	else if (!ft_strcmp(s, ft_strstr(s, "or")))
+	if (!ft_strcmp(s, ft_strstr(s, "or")))
 		return (ft_strdup("or"));
 	else if (!ft_strcmp(s, ft_strstr(s, "xor")))
 		return (ft_strdup("xor"));
@@ -196,6 +167,28 @@ char		*get_op(char *s)
 	return (NULL);
 }
 
+char		*get_op(char *s)
+{
+	if (!ft_strcmp(s, ft_strstr(s, "live")))
+		return (ft_strdup("live"));
+	else if (!ft_strcmp(s, ft_strstr(s, "ldi")))
+		return (ft_strdup("ldi"));
+	else if (!ft_strcmp(s, ft_strstr(s, "ld")))
+		return (ft_strdup("ld"));
+	else if (!ft_strcmp(s, ft_strstr(s, "sti")))
+		return (ft_strdup("sti"));
+	else if (!ft_strcmp(s, ft_strstr(s, "st")))
+		return (ft_strdup("st"));
+	else if (!ft_strcmp(s, ft_strstr(s, "add")))
+		return (ft_strdup("add"));
+	else if (!ft_strcmp(s, ft_strstr(s, "sub")))
+		return (ft_strdup("sub"));
+	else if (!ft_strcmp(s, ft_strstr(s, "and")))
+		return (ft_strdup("and"));
+	else
+		return (get_op_helper(s));
+}
+
 void		find_op(t_all *gen)
 {
 	char	*tmp;
@@ -212,7 +205,7 @@ void		find_op(t_all *gen)
 	}
 }
 
-int			num_len(int num)
+long int	num_len(int num)
 {
 	int i;
 
@@ -229,14 +222,19 @@ int			num_len(int num)
 
 int			is_reg_arg(char *s)
 {
-	int		i;
-	int		j;
+	int			i;
+	long int	j;
+	int			a;
 
-	if ((s[0] != 'r') || (s[1] == '+' || s[1] == '-' || !(s[1] <= '9' && s[1] >= '0')))
+	if ((s[0] != 'r') || (s[1] == '+' || s[1] == '-'
+		|| !(s[1] <= '9' && s[1] >= '0')))
 		return (0);
 	i = 1;
-	while (s[i] == '0')
-		i++;
+	a = i;
+	while (ft_isdigit(s[a]))
+		a++;
+	if (a > 12)
+		return (0);
 	if (ft_isdigit(s[i]))
 	{
 		j = ft_atoi(&s[i]);
@@ -272,8 +270,6 @@ int			is_dir_arg(char *s)
 	if (s[0] != DIRECT_CHAR)
 		return (0);
 	i = 1;
-	while (s[i] == ' ' || s[i] == '\t')
-		i++;
 	if (s[i] == '-')
 		i++;
 	while (ft_isdigit(s[i]))
@@ -309,8 +305,6 @@ int			is_dir_labl_arg(char *s)
 	if (s[0] != DIRECT_CHAR)
 		return (0);
 	i = 1;
-	while (s[i] == ' ' || s[i] == '\t')
-		i++;
 	if (s[i] != LABEL_CHAR)
 		return (0);
 	i++;
@@ -318,7 +312,6 @@ int			is_dir_labl_arg(char *s)
 		i++;
 	if (is_delim(s[i]) && is_char_labl(s[i - 1], LABEL_CHARS))
 		return (1);
-	ft_putendl(&s[i]);
 	return (0);
 }
 
@@ -415,55 +408,76 @@ void		find_nl_or_separ(t_all *gen)
 {
 	char	*tmp;
 
-	tmp = gen->file[gen->i] == '\n' ? char_to_string('\n') : char_to_string(SEPARATOR_CHAR);
-	push_tail_token(&gen->token, gen->file[gen->i] == '\n' ? NL_TYPE : DELIM_TYPE, tmp, gen->point);
+	tmp = gen->file[gen->i] == '\n' ? char_to_string('\n') :
+		char_to_string(SEPARATOR_CHAR);
+	push_tail_token(&gen->token, gen->file[gen->i] == '\n' ? NL_TYPE :
+		DELIM_TYPE, tmp, gen->point);
 	free(tmp);
 	increment_point(gen);
+}
+
+void		reading_error(t_all *gen)
+{
+	print_point(gen->point);
+	ft_putstr(": Error: ");
+	while (gen->file[gen->i] && gen->file[gen->i] != ' ' &&
+		gen->file[gen->i] != '\t' && gen->file[gen->i] != '\n')
+	{
+		ft_putchar(gen->file[gen->i]);
+		gen->i++;
+	}
+	write(1, "\n", 1);
+	do_exit(NULL, gen);
+}
+
+void		reading_helper_2(t_all *gen)
+{
+	if (is_op(gen))
+		find_op(gen);
+	else if (is_label(gen))
+		find_label(gen);
+	else if (is_reg_arg(&gen->file[gen->i]))
+		find_reg_arg(gen);
+	else if (is_dir_arg(&gen->file[gen->i]))
+		find_dir_arg(gen);
+	else if (is_dir_labl_arg(&gen->file[gen->i]))
+		find_dir_labl_arg(gen);
+}
+
+void		reading_helper(t_all *gen)
+{
+	if (gen->file[gen->i] == COMMENT_CHAR || gen->file[gen->i] == ';')
+		while (gen->file[gen->i] != '\n' && gen->file[gen->i])
+			increment_point(gen);
+	else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i],
+	NAME_CMD_STRING)))
+		find_name_comment(gen, NAME_TYPE, NAME_CMD_STRING);
+	else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i],
+	COMMENT_CMD_STRING)))
+		find_name_comment(gen, COMMENT_TYPE, COMMENT_CMD_STRING);
+	else if (gen->file[gen->i] == '\n' || gen->file[gen->i] == SEPARATOR_CHAR)
+		find_nl_or_separ(gen);
+	else if (is_op(gen) || is_label(gen) || is_reg_arg(&gen->file[gen->i]) ||
+	is_dir_arg(&gen->file[gen->i]) || is_dir_labl_arg(&gen->file[gen->i]))
+		reading_helper_2(gen);
+	else if (is_ind_arg(&gen->file[gen->i]))
+		find_ind_arg(gen);
+	else if (is_ind_labl_arg(&gen->file[gen->i]))
+		find_ind_labl_arg(gen);
+	else
+		reading_error(gen);
 }
 
 int			reading(t_all *gen)
 {
 	while (gen->file[gen->i])
 	{
-		while ((gen->file[gen->i] == ' ' || gen->file[gen->i] == '\t') && gen->file[gen->i])
+		while ((gen->file[gen->i] == ' ' || gen->file[gen->i] == '\t')
+		&& gen->file[gen->i])
 			increment_point(gen);
 		if (!gen->file[gen->i])
 			break ;
-		if (gen->file[gen->i] == COMMENT_CHAR || gen->file[gen->i] == ';')
-			while (gen->file[gen->i] != '\n' && gen->file[gen->i])
-				increment_point(gen);
-		else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i], NAME_CMD_STRING)))
-			find_name_comment(gen, NAME_TYPE, NAME_CMD_STRING);
-		else if (!ft_strcmp(&gen->file[gen->i], ft_strstr(&gen->file[gen->i], COMMENT_CMD_STRING)))
-			find_name_comment(gen, COMMENT_TYPE, COMMENT_CMD_STRING);
-		else if (gen->file[gen->i] == '\n' || gen->file[gen->i] == SEPARATOR_CHAR)
-			find_nl_or_separ(gen);
-		else if (is_op(gen))
-			find_op(gen);
-		else if (is_label(gen))
-			find_label(gen);
-		else if (is_reg_arg(&gen->file[gen->i]))
-			find_reg_arg(gen);
-		else if (is_dir_arg(&gen->file[gen->i]))
-			find_dir_arg(gen);
-		else if (is_dir_labl_arg(&gen->file[gen->i]))
-			find_dir_labl_arg(gen);
-		else if (is_ind_arg(&gen->file[gen->i]))
-			find_ind_arg(gen);
-		else if (is_ind_labl_arg(&gen->file[gen->i]))
-			find_ind_labl_arg(gen);
-		else
-		{
-			print_point(gen->point);
-			ft_putstr(": Unknown token: ");
-			while (gen->file[gen->i] && gen->file[gen->i] != ' ' && gen->file[gen->i] != '\t' && gen->file[gen->i] != '\n')
-			{
-				ft_putchar(gen->file[gen->i]);
-				gen->i++;
-			}
-			write(1, "\n", 1);
-			do_exit(NULL, gen);
-		}
+		reading_helper(gen);
 	}
 	push_tail_token(&gen->token, END_FILE, "END FILE", gen->point);
 	return (0);

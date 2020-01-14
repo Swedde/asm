@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 19:41:05 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/14 17:13:58 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@
 # define IND_LABL_ARG_TYPE 11
 # define END_FILE 12
 
-typedef struct	s_point
+typedef struct		s_point
 {
-	int		x;
-	int		y;
-}				t_point;
+	int				x;
+	int				y;
+}					t_point;
 
-typedef struct	s_token
+typedef struct		s_token
 {
 	int				type;
 	char			*content;
@@ -47,65 +47,65 @@ typedef struct	s_token
 	unsigned char	arg_code;
 	int				dir_size;
 	struct s_token	*next;
-}				t_token;
+}					t_token;
 
-typedef union	u_test
+union				u_int
 {
 	unsigned		a;
-	struct
+	struct			s_ch
 	{
 		unsigned char	c1:8;
 		unsigned char	c2:8;
 		unsigned char	c3:8;
 		unsigned char	c4:8;
-	}				ch;
-}				uni_t;
+	}				t_ch;
+};
 
-typedef union	u_short
+typedef union		u_short
 {
 	unsigned short	a;
-	struct
+	struct			s_sch
 	{
 		unsigned char	c1:8;
 		unsigned char	c2:8;
-	}ch;
-}				t_short;
+	}				t_sch;
+}					t_short;
 
-typedef struct	s_all
+typedef struct		s_all
 {
-	int			i;
-	char		*file;
-	t_point		point;
-	t_token		*token;
-	int			fd;
-	int			fd_s;
-	char		*file_name;
-	char		*error;
-	int			name;
-	int			comment;
-	int			size;
-	int			op_size;
-}				t_all;
+	int				i;
+	char			*file;
+	t_point			point;
+	t_token			*token;
+	int				fd;
+	int				fd_s;
+	char			*file_name;
+	char			*error;
+	int				name;
+	int				comment;
+	int				size;
+	int				op_size;
+}					t_all;
 
-t_all			*set_def_gen(char *s);
-int				write_int_to_file(t_all	*gen, int to_file);
-void			do_exit(char **error_mes, t_all *gen);
-int				reading(t_all *gen);
-char			*char_to_string(char c);
-t_token			*new_token(int type, char *content, t_point point);
-void			push_tail_token(t_token **head, int type, char *con,
-				t_point point);
-void			lst_del_token(t_token *token);
-void			print_point(t_point a);
-void			lexical_analyz(t_all *gen);
-void			print_token(t_token *token);
-void			start_analyz(t_all *gen, t_token *token);
-void			recording(t_all *gen);
-void			set_size_code(t_all *gen, t_token *token);
-int				write_short_to_file(t_all *gen, short to_file);
-t_token			*next_token(t_token *token, int i);
-int				write_byte_to_file(t_all *gen, unsigned char c);
-int				write_nam_com_to_file(t_all *gen, int len, int type);
-void	print_token_type(int i);
+t_all				*set_def_gen(char *s);
+int					write_int_to_file(t_all	*gen, int to_file);
+void				do_exit(char **error_mes, t_all *gen);
+int					reading(t_all *gen);
+char				*char_to_string(char c);
+t_token				*new_token(int type, char *content, t_point point);
+void				push_tail_token(t_token **head, int type, char *con,
+					t_point point);
+void				lst_del_token(t_token *token);
+void				print_point(t_point a);
+void				lexical_analyz(t_all *gen);
+void				print_token(t_token *token);
+void				start_analyz(t_all *gen, t_token *token);
+void				recording(t_all *gen);
+void				set_size_code(t_all *gen, t_token *token);
+int					write_short_to_file(t_all *gen, short to_file);
+t_token				*next_token(t_token *token, int i);
+int					write_byte_to_file(t_all *gen, unsigned char c);
+int					write_nam_com_to_file(t_all *gen, int len, int type);
+void				print_token_type(int i);
 
 #endif

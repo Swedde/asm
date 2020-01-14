@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 22:58:42 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 19:45:58 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/14 16:59:40 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,8 @@ void	start_analyz(t_all *gen, t_token *token)
 	else if (gen->name && gen->comment)
 	{
 		if (token->type == LABEL_TYPE)
-			start_analyz(gen, token->next);
+			token->next->type != END_FILE ? start_analyz(gen, token->next)
+			: print_expexted_exit(gen, token, 1, NL_TYPE);
 		else if (token->type == OP_TYPE)
 			parse_op(gen, token);
 		else

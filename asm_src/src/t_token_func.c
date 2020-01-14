@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 00:46:14 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 18:58:28 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/14 17:13:52 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void		lst_del_token(t_token *token)
 /*
 void		print_token(t_token*	token)
 {
-
 	while (token)
 	{
 		int i = token->type;

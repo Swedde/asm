@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 01:39:31 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 18:56:03 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/14 17:12:54 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	write_short_to_file_helper(int fd, t_short a)
 {
 	unsigned char	c;
 
-	c = a.ch.c2;
+	c = a.t_sch.c2;
 	write(fd, &c, 1);
-	c = a.ch.c1;
+	c = a.t_sch.c1;
 	write(fd, &c, 1);
 	return (0);
 }

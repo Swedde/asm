@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2020/01/14 18:04:53 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/17 16:56:00 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void		find_op(t_all *gen)
 	}
 }
 
-long int	num_len(int num)
+int			num_len(unsigned long num)
 {
 	int i;
 
@@ -222,14 +222,16 @@ long int	num_len(int num)
 
 int			is_reg_arg(char *s)
 {
-	int			i;
-	long int	j;
-	int			a;
+	int					i;
+	unsigned long int	j;
+	int					a;
 
 	if ((s[0] != 'r') || (s[1] == '+' || s[1] == '-'
 		|| !(s[1] <= '9' && s[1] >= '0')))
 		return (0);
 	i = 1;
+	if (s[i] == '0')
+		i++;
 	a = i;
 	while (ft_isdigit(s[a]))
 		a++;

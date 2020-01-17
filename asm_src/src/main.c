@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 18:48:57 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 18:41:33 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/17 16:07:47 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		main(int ac, char **av)
 	}
 	gen = set_def_gen(av[ac - 1]);
 	reading(gen);
+	print_token(gen->token);
 	lexical_analyz(gen);
 	recording(gen);
 	do_free(gen);

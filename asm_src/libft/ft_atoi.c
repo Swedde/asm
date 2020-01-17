@@ -6,11 +6,13 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 18:15:49 by nsheev            #+#    #+#             */
-/*   Updated: 2020/01/14 15:55:06 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/17 19:26:16 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-long int	ft_atoi(const char *str)
+#include <libft.h>
+
+unsigned long int	ft_atoi(const char *str)
 {
 	unsigned long long int	i;
 	int						neg;
@@ -31,8 +33,10 @@ long int	ft_atoi(const char *str)
 		i = i * 10 + *str - 48;
 		str++;
 	}
-	if (i > 9223372036854775807)
-		return (neg == 0 ? -1 : 0);
+	if (i > 4294967295)
+		return (4294967295);
+	if (i > 4294967295 && neg)
+		return (0);
 	if (neg == 1)
 		i = i * (-1);
 	return (i);

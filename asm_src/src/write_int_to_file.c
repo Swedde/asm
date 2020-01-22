@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 02:00:29 by swedde            #+#    #+#             */
-/*   Updated: 2020/01/17 17:09:39 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/20 16:01:43 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	write_int_to_file_helper(int fd, union u_int a)
 	return (0);
 }
 
-int			write_int_to_file(t_all *gen, unsigned long int to_file)
+int			write_int_to_file(t_all *gen, unsigned int to_file)
 {
 	union u_int	uni_z;
 

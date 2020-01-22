@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2020/01/17 16:56:00 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/20 16:38:25 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,16 +268,28 @@ void		find_reg_arg(t_all *gen)
 int			is_dir_arg(char *s)
 {
 	int i;
+	int a;
 
 	if (s[0] != DIRECT_CHAR)
 		return (0);
 	i = 1;
 	if (s[i] == '-')
 		i++;
-	while (ft_isdigit(s[i]))
+	a = 0;
+	while (s[i] == '0')
 		i++;
+	while (ft_isdigit(s[i]))
+	{
+		i++;
+		a++;
+	}
 	if (is_delim(s[i]) && ft_isdigit(s[i - 1]))
+	{
+		if (a > 14 || (ft_atoi(&s[1]) > 2147483647 ||
+		ft_atoi(&s[1]) < -2147483648))
+			return (0);
 		return (1);
+	}
 	return (0);
 }
 
@@ -339,16 +351,27 @@ void		find_dir_labl_arg(t_all *gen)
 int			is_ind_arg(char *s)
 {
 	int i;
+	int a;
 
 	if (is_delim(s[0]))
 		return (0);
 	i = 0;
+	a = 0;
 	if (s[0] == '-')
 		i++;
-	while (ft_isdigit(s[i]))
+	while (s[i] == '0')
 		i++;
+	while (ft_isdigit(s[i]))
+	{
+		i++;
+		a++;
+	}
 	if (is_delim(s[i]) && i != 0)
+	{
+		if (a > 14 || (ft_atoi(s) > 2147483647 || ft_atoi(s) < -2147483648))
+			return (0);
 		return (1);
+	}
 	return (0);
 }
 

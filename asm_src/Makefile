@@ -6,7 +6,7 @@
 #    By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 19:17:02 by swedde            #+#    #+#              #
-#    Updated: 2019/12/26 18:46:37 by nsheev           ###   ########.fr        #
+#    Updated: 2020/01/22 16:49:14 by nsheev           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,10 @@ $(NAME): $(LIB) $(SRC)
 
 $(LIB):
 	make -C libft/ fclean && make -C libft/
+
+dis:
+	gcc -c -I./libft/includes -I./includes src/disasm.c
+	gcc disasm.o $(INC) -o disasm -L libft/ -lft
 
 test: $(NAME)
 	diff test.col test.cor

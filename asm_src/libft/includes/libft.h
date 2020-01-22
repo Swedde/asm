@@ -6,7 +6,7 @@
 /*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:19:03 by nsheev            #+#    #+#             */
-/*   Updated: 2020/01/17 17:35:56 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/22 16:33:57 by nsheev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # include <unistd.h>
 
-#include <stdio.h>
+# include <stdio.h>
 
 typedef struct		s_list
 {
@@ -81,7 +81,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-unsigned long int	ft_atoi(const char *str);
+long int			ft_atoi(const char *str);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));

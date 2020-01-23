@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 18:15:49 by nsheev            #+#    #+#             */
-/*   Updated: 2020/01/22 16:33:39 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/23 03:03:32 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-long int	ft_atoi(const char *str)
+long int	ft_atol(const char *str)
 {
 	long long int			i;
 	int						neg;

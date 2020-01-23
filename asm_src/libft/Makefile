@@ -6,7 +6,7 @@
 #    By: swedde <swedde@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 12:08:06 by nsheev            #+#    #+#              #
-#    Updated: 2019/12/11 19:06:30 by swedde           ###   ########.fr        #
+#    Updated: 2020/01/23 03:04:11 by swedde           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ FUN =	ft_memset.c \
 		ft_putstr_fd.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
-		ft_atoi.c \
+		ft_atol.c \
 		ft_lstnew.c \
 		ft_lstadd.c \
 		ft_lstiter.c \

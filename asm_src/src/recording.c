@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recording.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 00:11:50 by swedde            #+#    #+#             */
-/*   Updated: 2019/12/26 15:57:25 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/23 03:07:23 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,12 +215,12 @@ void	write_exec_code_to_file(t_all *gen, t_token *token)
 		if (token->type == OP_TYPE && write_byte_to_file(gen, token->op_code))
 			token->arg_code ? write_byte_to_file(gen, token->arg_code) : 0;
 		else if (token->type == REG_ARG_TYPE)
-			write_byte_to_file(gen, (unsigned char)ft_atoi(token->content));
+			write_byte_to_file(gen, (unsigned char)ft_atol(token->content));
 		else if (token->type == DIR_ARG_TYPE)
 			if (token->dir_size == 2)
-				write_short_to_file(gen, (short)ft_atoi(token->content));
+				write_short_to_file(gen, (short)ft_atol(token->content));
 			else
-				write_int_to_file(gen, ft_atoi(token->content));
+				write_int_to_file(gen, ft_atol(token->content));
 		else if (token->type == DIR_LABL_ARG_TYPE)
 			if (token->dir_size == 2)
 				write_short_to_file(gen,
@@ -228,7 +228,7 @@ void	write_exec_code_to_file(t_all *gen, t_token *token)
 			else
 				write_int_to_file(gen, get_label_value(gen->token, token));
 		else if (token->type == IND_ARG_TYPE)
-			write_short_to_file(gen, (short)ft_atoi(token->content));
+			write_short_to_file(gen, (short)ft_atol(token->content));
 		else if (token->type == IND_LABL_ARG_TYPE)
 			write_short_to_file(gen, get_label_value(gen->token, token));
 		token = token->next;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+         #
+#    By: swedde <swedde@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 19:17:02 by swedde            #+#    #+#              #
-#    Updated: 2020/01/22 16:49:14 by nsheev           ###   ########.fr        #
+#    Updated: 2020/01/23 02:56:53 by swedde           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,17 +38,10 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(SRC)
 	gcc -c -Wall -Werror -Wextra -I./libft/includes -I./includes $(SRC)
-	gcc *.o $(INC) -o asm -L libft/ -lft
+	gcc *.o $(INC) -o $(NAME) -L libft/ -lft
 
 $(LIB):
 	make -C libft/ fclean && make -C libft/
-
-dis:
-	gcc -c -I./libft/includes -I./includes src/disasm.c
-	gcc disasm.o $(INC) -o disasm -L libft/ -lft
-
-test: $(NAME)
-	diff test.col test.cor
 
 clean:
 	make -C libft/ clean

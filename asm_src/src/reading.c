@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 15:32:55 by nsheev            #+#    #+#             */
-/*   Updated: 2020/01/20 16:38:25 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/23 03:07:24 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int			is_reg_arg(char *s)
 		return (0);
 	if (ft_isdigit(s[i]))
 	{
-		j = ft_atoi(&s[i]);
+		j = ft_atol(&s[i]);
 		if (j > 99)
 			return (0);
 		i += num_len(j);
@@ -257,7 +257,7 @@ void		find_reg_arg(t_all *gen)
 	j = gen->i + 1;
 	while (gen->file[j] == '0')
 		j++;
-	j += num_len(ft_atoi(&gen->file[j]));
+	j += num_len(ft_atol(&gen->file[j]));
 	tmp = ft_strsub(gen->file, gen->i + 1, j - gen->i - 1);
 	push_tail_token(&gen->token, REG_ARG_TYPE, tmp, gen->point);
 	ft_strdel(&tmp);
@@ -285,8 +285,8 @@ int			is_dir_arg(char *s)
 	}
 	if (is_delim(s[i]) && ft_isdigit(s[i - 1]))
 	{
-		if (a > 14 || (ft_atoi(&s[1]) > 2147483647 ||
-		ft_atoi(&s[1]) < -2147483648))
+		if (a > 14 || (ft_atol(&s[1]) > 2147483647 ||
+		ft_atol(&s[1]) < -2147483648))
 			return (0);
 		return (1);
 	}
@@ -368,7 +368,7 @@ int			is_ind_arg(char *s)
 	}
 	if (is_delim(s[i]) && i != 0)
 	{
-		if (a > 14 || (ft_atoi(s) > 2147483647 || ft_atoi(s) < -2147483648))
+		if (a > 14 || (ft_atol(s) > 2147483647 || ft_atol(s) < -2147483648))
 			return (0);
 		return (1);
 	}

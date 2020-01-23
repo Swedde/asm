@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_token_func.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 00:46:14 by swedde            #+#    #+#             */
-/*   Updated: 2020/01/17 16:06:56 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/23 02:59:24 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		lst_del_token(t_token *token)
 		tmp = token;
 	}
 }
-
+/*
 void		print_token(t_token*	token)
 {
 	while (token)
@@ -76,3 +76,4 @@ void		print_token(t_token*	token)
 	}
 	printf("\n");
 }
+*/

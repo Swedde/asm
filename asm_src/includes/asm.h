@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsheev <nsheev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: swedde <swedde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 17:41:33 by swedde            #+#    #+#             */
-/*   Updated: 2020/01/22 16:38:05 by nsheev           ###   ########.fr       */
+/*   Updated: 2020/01/23 02:59:34 by swedde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,5 @@ t_token				*next_token(t_token *token, int i);
 int					write_byte_to_file(t_all *gen, unsigned char c);
 int					write_nam_com_to_file(t_all *gen, int len, int type);
 void				print_token_type(int i);
-
-void				print_token(t_token	*token);
 
 #endif
